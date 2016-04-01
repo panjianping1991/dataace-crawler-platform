@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<template>
+    <!--模板id，创建时由程序自动生成-->
+    <id>toutiao</id>
+    <!--模板名称-->
+    <name>广州国土局房源交易记录</name>
+    <!--模板描述-->
+    <description>模板描述</description>
+   	<!-- 深度 -->
+    <maxDeep>100000000</maxDeep>
+    
+    <dataSource>TOUTIAO</dataSource>
+    
+	<!--模板和种子地址，支持一个模板同时爬取多个种子的数据-->
+	<seeds>
+	    <request>
+	       <httpMethod>GET</httpMethod>
+	       <url>http://toutiao.com/api/article/recent/?source=2&count=20&category=news_tech&max_behot_time=1459490351.8&utm_source=toutiao&offset=0&_=1459490326757</url>
+	       <httpHeaders>
+	           <httpHeader>
+	                <key></key>
+	                <value></value>
+	           </httpHeader>
+	       </httpHeaders>
+	       <parameters>
+	          <parameter>
+	                <key></key>
+	                <value></value>
+	          </parameter>
+	       </parameters>
+	    </request>
+		
+	</seeds>
+
+	<!--爬取两个页面的间隔时间，用于控制爬取网页的频度-->
+	<pageSleepTime>2000</pageSleepTime>
+	<messageQueue>
+		<!--创建包含等爬取URL的MQ消息时，每次所携带的URL数据量-->
+		<urlSize>50</urlSize>
+		<!--创建包含已抽取数据的MQ消息时，每次所携带的数据量-->
+		<dataSize>50</dataSize>
+	</messageQueue>
+	
+	<http>
+		<cookie></cookie>
+		<userAgent>Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.71 Safari/537.36</userAgent>
+		<!--连接超时时间-->
+		<connectionTimeout>5000</connectionTimeout>
+		<!--请求超时时间-->
+		<soTimeout>10000</soTimeout>
+		<encoding>gbk</encoding>
+		<!-- 下载异常时马上重新尝试的次数（不会将url添加到队列） -->
+		<retryTimes>3</retryTimes>
+		<!-- 下载异常失败之后，重试的次数（将url重新添加队列中） -->
+		<cycleRetryTimes>8</cycleRetryTimes>
+		<contentType>text/xml; charset=gbk</contentType>
+		<proxy>false</proxy>
+	</http>
+	<jarPaths>
+	        <jarPath>file:///E:\repo\org\dataace\toutiao-extractor\0.0.1\toutiao-extractor-0.0.1.jar</jarPath>
+	 </jarPaths>
+	<processors>
+	    
+	   	<!-- java类别的插件配置,url表示jar包所在的路径，支持本地以及网络jar地址 -->
+		<processor type="java">
+			<regexs>
+				<urlRegs>
+					<urlReg>http://toutiao.com/api/article/recent/\?source=2&count=20&category=news_tech[\w\W]+</urlReg>
+				</urlRegs>
+			</regexs>
+			<page>
+				<props>
+					<prop key="encoding">utf-8</prop><!-- 页面级别的参数，在downloader页面的时候会用到 -->
+					<prop key="recrawl">604800000</prop><!-- 该url重爬的时间间隔限制 -->					
+				</props>
+			</page>
+			<target>
+				<class>com.dataace.extractor.toutiao.ArticleListExtractor</class>
+				<props>
+				</props>
+			</target>
+		</processor>
+		
+		
+		
+		
+	</processors>
+</template>

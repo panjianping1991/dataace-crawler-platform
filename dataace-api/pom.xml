@@ -1,0 +1,188 @@
+<?xml version="1.0"?>
+<project
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<modelVersion>4.0.0</modelVersion>
+	
+	<parent>
+    <groupId>org.dataace</groupId>
+    <artifactId>dataace-crawler-platform</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+  </parent>
+  
+	<artifactId>dataace-api</artifactId>
+	<packaging>war</packaging>
+
+	<name>data-ace-api Maven Webapp</name>
+	<url>http://maven.apache.org</url>
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+         <spring.version>4.0.6.RELEASE</spring.version>
+         <logback.version>1.1.1</logback.version>
+		<slf4j.api.version>1.7.7</slf4j.api.version>
+         
+    </properties>
+   
+	<dependencies>
+		
+
+		<!-- Spring -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-core</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-web</artifactId>
+            <version>${spring.version}</version>
+        </dependency>		
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-webmvc</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-jdbc</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		
+	   <dependency>
+	<groupId>org.springframework.data</groupId>
+	<artifactId>spring-data-mongodb</artifactId>
+	<version>1.8.4.RELEASE</version>
+</dependency>
+
+
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjrt</artifactId>
+			<version>1.6.11</version>
+		</dependency>
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjweaver</artifactId>
+			<version>1.6.11</version>
+		</dependency>
+		
+			<dependency>
+			<groupId>commons-dbcp</groupId>
+			<artifactId>commons-dbcp</artifactId>
+			<version>1.4</version>
+		</dependency>
+		<dependency>
+            <groupId>org.codehaus.jackson</groupId>
+            <artifactId>jackson-mapper-asl</artifactId>
+            <version>1.9.2</version>
+        </dependency>
+
+		<dependency>
+			<groupId>javassist</groupId>
+			<artifactId>javassist</artifactId>
+			<version>3.8.0.GA</version>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<version>3.1.0</version>
+		</dependency>
+		
+		    <dependency>  
+                <groupId>org.slf4j</groupId>  
+                <artifactId>jcl-over-slf4j</artifactId>  
+                <version>1.7.5</version>  
+            </dependency>  
+            <dependency>  
+                <groupId>org.slf4j</groupId>  
+                <artifactId>slf4j-api</artifactId>  
+                <version>1.7.5</version>  
+            </dependency>  
+            <dependency>  
+                <groupId>ch.qos.logback</groupId>  
+                <artifactId>logback-core</artifactId>  
+                <version>1.0.13</version>  
+            </dependency>  
+            <dependency>  
+                <groupId>ch.qos.logback</groupId>  
+                <artifactId>logback-classic</artifactId>  
+                <version>1.0.13</version>  
+            </dependency>  
+            <dependency>  
+      <groupId>org.logback-extensions</groupId>  
+      <artifactId>logback-ext-spring</artifactId>  
+      <version>0.1.2</version>  
+      <scope>compile</scope>  
+    </dependency>
+
+	</dependencies>
+
+	<profiles>
+		<profile>
+			<id>local</id>
+			<properties>
+				<package.environment>local</package.environment>
+			</properties>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+		</profile>
+		<profile>
+			<id>dev</id>
+			<properties>
+				<package.environment>dev</package.environment>
+			</properties>
+		</profile>
+		<profile>
+			<id>test</id>
+			<properties>
+				<package.environment>test</package.environment>
+			</properties>
+		</profile>
+		<profile>
+			<id>yfb</id>
+			<properties>
+				<package.environment>yfb</package.environment>
+			</properties>
+		</profile>
+		<profile>
+			<id>product</id>
+			<properties>
+				<package.environment>product</package.environment>
+			</properties>
+		</profile>
+	</profiles>
+
+	<build>
+		<finalName>dataace-api</finalName>
+		<resources>
+			<!--environment -->
+			<resource>
+				<directory>src/main/resources/${package.environment}</directory>
+			</resource>
+
+			<!--public -->
+			<resource>
+				<directory>src/main/resources/public</directory>
+			</resource>
+		</resources>
+
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.6</source>
+					<target>1.6</target>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+
+</project>

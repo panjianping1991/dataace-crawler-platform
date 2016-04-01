@@ -1,0 +1,73 @@
+<web-app xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+	version="3.0">
+	
+	<context-param>
+		<param-name>platform</param-name>
+		<param-value>1</param-value>
+	</context-param>
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>classpath:all.xml</param-value>
+	</context-param>
+	<context-param>
+		<param-name>logbackConfigLocation</param-name>
+		<param-value>classpath:logback.xml</param-value>
+	</context-param>
+<listener>  
+        <listener-class>ch.qos.logback.ext.spring.web.LogbackConfigListener</listener-class>  
+    </listener>  
+	<servlet>
+		<servlet-name>mvc-dispatcher</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<!-- <load-on-startup>0</load-on-startup> -->
+        <init-param>
+            <param-name>contextConfigLocation</param-name>
+            <param-value>classpath:mvc-servlet.xml</param-value>
+        </init-param>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>mvc-dispatcher</servlet-name>
+		<url-pattern>/</url-pattern>
+	</servlet-mapping>
+
+	 <filter>
+		<filter-name>encodingFilter</filter-name>
+		<filter-class>com.dataace.api.filter.EncodingFilter</filter-class>
+		<init-param>
+			<param-name>encoding</param-name>
+			<param-value>UTF-8</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>encodingFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping> 
+    <!-- <filter>    
+        <filter-name>Character Encoding</filter-name>    
+        <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>    
+        <init-param>    
+            <param-name>encoding</param-name>    
+            <param-value>UTF-8</param-value>    
+        </init-param>    
+    </filter>    
+    <filter-mapping>    
+        <filter-name>Character Encoding</filter-name>    
+        <url-pattern>/*</url-pattern>    
+    </filter-mapping>   -->
+
+
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+	
+	<error-page>
+    <error-code>404</error-code>
+    <location>/404</location>
+  </error-page>
+    
+    <welcome-file-list>
+        <welcome-file>index.jsp</welcome-file>
+    </welcome-file-list>
+
+</web-app>
