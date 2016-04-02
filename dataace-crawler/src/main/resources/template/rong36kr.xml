@@ -8,13 +8,17 @@
     <!--模板描述-->
     <description>模板描述</description>
    	<!-- 深度 -->
-    <maxDeep>100000000</maxDeep>
+    <maxDeep>100</maxDeep>
+    
+     <!-- 每隔多长时间跑一次，单位分钟 -->
+    <scheduleInterval>-1</scheduleInterval>
+    
     <dataSource>RONG_36KR</dataSource>
 	<!--模板和种子地址，支持一个模板同时爬取多个种子的数据-->
 	<seeds>
 	    <request>
 	       <httpMethod>GET</httpMethod>
-	       <url>https://rong.36kr.com/api/dict/industry?type=e</url>
+	       <url>https://krplus-cdn.b0.upaiyun.com/krplus/scripts/8ad19359.default.js</url>
 	       <httpHeaders>
 	           <httpHeader>
 	                <key></key>
@@ -56,11 +60,30 @@
 		<proxy>false</proxy>
 	</http>
 	<jarPaths>
-	        <jarPath>file:///E:\repo\data-ace\rong36kr-extractor\0.0.1\rong36kr-extractor-0.0.1.jar</jarPath>
+	        <jarPath>file:///C:\Users\pan\.m2\repository\org\dataace\rong36kr-extractor\0.0.1-SNAPSHOT\rong36kr-extractor-0.0.1-SNAPSHOT.jar</jarPath>
 	 </jarPaths>
 	<processors>
 	    
 	   	<!-- java类别的插件配置,url表示jar包所在的路径，支持本地以及网络jar地址 -->
+		<processor type="java">
+			<regexs>
+				<urlRegs>
+					<urlReg>https://krplus-cdn.b0.upaiyun.com/krplus/scripts/8ad19359.default.js</urlReg>
+				</urlRegs>
+			</regexs>
+			<page>
+				<props>
+					<prop key="encoding">utf-8</prop><!-- 页面级别的参数，在downloader页面的时候会用到 -->
+					<prop key="recrawl">604800000</prop><!-- 该url重爬的时间间隔限制 -->					
+				</props>
+			</page>
+			<target>
+				<class>com.dataace.extractor.rong36kr.Rong36KrRegionExtractor</class>
+				<props>
+				</props>
+			</target>
+		</processor>
+		
 		<processor type="java">
 			<regexs>
 				<urlRegs>
@@ -83,7 +106,7 @@
 		<processor type="java">
 			<regexs>
 				<urlRegs>
-					<urlReg>https://rong.36kr.com/api/dict/industry\?type=e</urlReg>
+					<urlReg>https://rong.36kr.com/api/company\?.+</urlReg>
 				</urlRegs>
 			</regexs>
 			<page>
@@ -93,7 +116,7 @@
 				</props>
 			</page>
 			<target>
-				<class>com.dataace.extractor.rong36kr.Rong36KrCompanyIndustryExtractor</class>
+				<class>com.dataace.extractor.rong36kr.Rong36KrCompanyListExtractor</class>
 				<props>
 				</props>
 			</target>

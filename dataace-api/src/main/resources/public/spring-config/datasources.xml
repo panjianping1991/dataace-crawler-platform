@@ -16,6 +16,18 @@
 	<!-- ############################## MongoDB CONFIG ############################ -->
     <!--线下配置-->
     <mongo:mongo host="${mongo.host}" port="${mongo.port}">
+    
+     <mongo:options connections-per-host="${mongo.connectionsPerHost}"
+                       threads-allowed-to-block-for-connection-multiplier="${mongo.threadsAllowedToBlockForConnectionMultiplier}"
+                       connect-timeout="${mongo.connectTimeout}"
+                       max-wait-time="${mongo.maxWaitTime}"
+                       auto-connect-retry="${mongo.autoConnectRetry}"
+                       socket-keep-alive="${mongo.socketKeepAlive}"
+                       socket-timeout="${mongo.socketTimeout}"
+                       slave-ok="${mongo.slaveOk}"
+                       write-number="1"
+                       write-timeout="0"
+                       write-fsync="true"/>
     <!--线上配置集群
     <mongo:mongo replica-set="${mongo.replicaSet}">
         <mongo:options connections-per-host="${mongo.connectionsPerHost}"

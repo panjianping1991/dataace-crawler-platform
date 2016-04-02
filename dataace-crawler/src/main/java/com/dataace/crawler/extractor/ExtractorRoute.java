@@ -38,7 +38,7 @@ public class ExtractorRoute {
 			}
 		}
 		
-		return new SimpleExtractor();
+		return null;
 	}
 
 }

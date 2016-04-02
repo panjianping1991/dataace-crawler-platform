@@ -14,8 +14,8 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 
 import com.dataace.api.bean.mongo.Company;
-import com.dataace.api.bean.mongo.MongoCollection;
 import com.dataace.api.service.ICompanyService;
+import com.dataace.crawler.persist.MongoCollection;
 import com.mongodb.DBObject;
 import com.mongodb.MongoException;
 
@@ -36,33 +36,8 @@ public class CompanyService implements ICompanyService{
 				@Override
 				public void processDocument(DBObject dbObject)
 						throws MongoException, DataAccessException {
-					
-					String id = dbObject.get("_id")==null?null:dbObject.get("_id").toString();
-					String cityName=dbObject.get("cityName")==null?null:dbObject.get("cityName").toString();
-					String districtName=dbObject.get("districtName")==null?null:dbObject.get("districtName").toString();
-					String weixin=dbObject.get("weixin")==null?null:dbObject.get("weixin").toString();
-					String companyName=dbObject.get("companyName")==null?null:dbObject.get("companyName").toString();
-					String webLink=dbObject.get("webLink")==null?null:dbObject.get("webLink").toString();
-					String fullName=dbObject.get("fullName")==null?null:dbObject.get("fullName").toString();
-					String industry=dbObject.get("industry")==null?null:dbObject.get("industry").toString();
-					String financePhase=dbObject.get("financePhase")==null?null:dbObject.get("financePhase").toString();
-					String logoLink=dbObject.get("logoLink")==null?null:dbObject.get("logoLink").toString();
-					String shortDescription=dbObject.get("shortDescription")==null?null:dbObject.get("shortDescription").toString();
-					
-					company.setId(id);
-					company.setCityName(cityName);
-					company.setDistrictName(districtName);
-					company.setWebLink(webLink);
-					company.setCompanyName(companyName);
-					company.setWebLink(webLink);
-					company.setFullName(fullName);
-					company.setIndustry(industry);
-					company.setFinancePhase(financePhase);
-					company.setLogoLink(logoLink);
-					company.setWeixin(weixin);
-					company.setShortDescription(shortDescription);
-					
-					
+					buildCompany(dbObject, company);
+									
 				}
 				 
 			 });
@@ -101,31 +76,8 @@ public class CompanyService implements ICompanyService{
 			@Override
 			public void processDocument(DBObject dbObject)
 					throws MongoException, DataAccessException {
-				Company company = new Company();
-				String id = dbObject.get("_id")==null?null:dbObject.get("_id").toString();
-				String cityName=dbObject.get("cityName")==null?null:dbObject.get("cityName").toString();
-				String districtName=dbObject.get("districtName")==null?null:dbObject.get("districtName").toString();
-				String weixin=dbObject.get("weixin")==null?null:dbObject.get("weixin").toString();
-				String companyName=dbObject.get("companyName")==null?null:dbObject.get("companyName").toString();
-				String webLink=dbObject.get("webLink")==null?null:dbObject.get("webLink").toString();
-				String fullName=dbObject.get("fullName")==null?null:dbObject.get("fullName").toString();
-				String industry=dbObject.get("industry")==null?null:dbObject.get("industry").toString();
-				String financePhase=dbObject.get("financePhase")==null?null:dbObject.get("financePhase").toString();
-				String logoLink=dbObject.get("logoLink")==null?null:dbObject.get("logoLink").toString();
-				String shortDescription=dbObject.get("shortDescription")==null?null:dbObject.get("shortDescription").toString();
-				
-				company.setId(id);
-				company.setCityName(cityName);
-				company.setDistrictName(districtName);
-				company.setWebLink(webLink);
-				company.setCompanyName(companyName);
-				company.setWebLink(webLink);
-				company.setFullName(fullName);
-				company.setIndustry(industry);
-				company.setFinancePhase(financePhase);
-				company.setLogoLink(logoLink);
-				company.setWeixin(weixin);
-				company.setShortDescription(shortDescription);
+				Company company = new Company();	
+				buildCompany(dbObject, company);
 				companys.add(company);
 				
 			}
@@ -134,7 +86,32 @@ public class CompanyService implements ICompanyService{
 		return companys;
 	}
 	
-	
+	public void buildCompany(DBObject dbObject,Company company){
+		String id = dbObject.get("_id")==null?null:dbObject.get("_id").toString();
+		String cityName=dbObject.get("cityName")==null?null:dbObject.get("cityName").toString();
+		String districtName=dbObject.get("districtName")==null?null:dbObject.get("districtName").toString();
+		String weixin=dbObject.get("weixin")==null?null:dbObject.get("weixin").toString();
+		String companyName=dbObject.get("companyName")==null?null:dbObject.get("companyName").toString();
+		String webLink=dbObject.get("webLink")==null?null:dbObject.get("webLink").toString();
+		String fullName=dbObject.get("fullName")==null?null:dbObject.get("fullName").toString();
+		String industry=dbObject.get("industry")==null?null:dbObject.get("industry").toString();
+		String financePhase=dbObject.get("financePhase")==null?null:dbObject.get("financePhase").toString();
+		String logoLink=dbObject.get("logoLink")==null?null:dbObject.get("logoLink").toString();
+		String shortDescription=dbObject.get("shortDescription")==null?null:dbObject.get("shortDescription").toString();
+		
+		company.setId(id);
+		company.setCityName(cityName);
+		company.setDistrictName(districtName);
+		company.setWebLink(webLink);
+		company.setCompanyName(companyName);
+		company.setWebLink(webLink);
+		company.setFullName(fullName);
+		company.setIndustry(industry);
+		company.setFinancePhase(financePhase);
+		company.setLogoLink(logoLink);
+		company.setWeixin(weixin);
+		company.setShortDescription(shortDescription);
+	}
 	
 
 }

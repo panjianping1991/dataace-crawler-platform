@@ -14,8 +14,8 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 
 import com.dataace.api.bean.mongo.DataSource;
-import com.dataace.api.bean.mongo.MongoCollection;
 import com.dataace.api.service.IDataSourceService;
+import com.dataace.crawler.persist.MongoCollection;
 import com.mongodb.DBObject;
 import com.mongodb.MongoException;
 

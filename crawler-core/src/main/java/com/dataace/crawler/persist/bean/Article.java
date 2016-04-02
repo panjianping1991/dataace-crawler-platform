@@ -8,15 +8,16 @@ public class Article {
 
 	private String id;
 	private String abst;
-	private int coummentCount;
-	private int recommendCount;
-	private long articleCreateTime;
-	private long articleDisplayTime;
+	private Integer commentCount;
+	private Integer recommendCount;
+	private Integer impressionCount;
+	private Long articleCreateTime;
+	private Long articleDisplayTime;
 	private String articleCreateTimeStr;
 	private String articleDisplayTimeStr;
 
 	private String imageUrl;
-	private int impressionCount;
+
 	private String keywords;
 	private String title;
 	private String dataSource;
@@ -26,8 +27,6 @@ public class Article {
 	
 	private String originalDataSource;
 	private String orginalUrl;
-
-	
 	public String getId() {
 		return id;
 	}
@@ -40,34 +39,36 @@ public class Article {
 	public void setAbst(String abst) {
 		this.abst = abst;
 	}
-	public int getCoummentCount() {
-		return coummentCount;
+	public Integer getCommentCount() {
+		return commentCount;
 	}
-	public void setCoummentCount(int coummentCount) {
-		this.coummentCount = coummentCount;
+	public void setCommentCount(Integer commentCount) {
+		this.commentCount = commentCount;
 	}
-
-	
-	public int getRecommendCount() {
+	public Integer getRecommendCount() {
 		return recommendCount;
 	}
-	public void setRecommendCount(int recommendCount) {
+	public void setRecommendCount(Integer recommendCount) {
 		this.recommendCount = recommendCount;
 	}
-	public long getArticleCreateTime() {
+	public Integer getImpressionCount() {
+		return impressionCount;
+	}
+	public void setImpressionCount(Integer impressionCount) {
+		this.impressionCount = impressionCount;
+	}
+	public Long getArticleCreateTime() {
 		return articleCreateTime;
 	}
-	public void setArticleCreateTime(long articleCreateTime) {
+	public void setArticleCreateTime(Long articleCreateTime) {
 		this.articleCreateTime = articleCreateTime;
 	}
-	public long getArticleDisplayTime() {
+	public Long getArticleDisplayTime() {
 		return articleDisplayTime;
 	}
-	public void setArticleDisplayTime(long articleDisplayTime) {
+	public void setArticleDisplayTime(Long articleDisplayTime) {
 		this.articleDisplayTime = articleDisplayTime;
 	}
-	
-	
 	public String getArticleCreateTimeStr() {
 		return articleCreateTimeStr;
 	}
@@ -85,12 +86,6 @@ public class Article {
 	}
 	public void setImageUrl(String imageUrl) {
 		this.imageUrl = imageUrl;
-	}
-	public int getImpressionCount() {
-		return impressionCount;
-	}
-	public void setImpressionCount(int impressionCount) {
-		this.impressionCount = impressionCount;
 	}
 	public String getKeywords() {
 		return keywords;
@@ -122,6 +117,12 @@ public class Article {
 	public void setContent(String content) {
 		this.content = content;
 	}
+	public String getTag() {
+		return tag;
+	}
+	public void setTag(String tag) {
+		this.tag = tag;
+	}
 	public String getOriginalDataSource() {
 		return originalDataSource;
 	}
@@ -134,12 +135,8 @@ public class Article {
 	public void setOrginalUrl(String orginalUrl) {
 		this.orginalUrl = orginalUrl;
 	}
-	public String getTag() {
-		return tag;
-	}
-	public void setTag(String tag) {
-		this.tag = tag;
-	}
+
+	
 	
 	
 	

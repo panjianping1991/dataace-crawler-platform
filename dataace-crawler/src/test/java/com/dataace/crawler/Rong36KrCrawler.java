@@ -16,6 +16,7 @@ public class Rong36KrCrawler {
 	private static final Logger logger =  LogManager.getLogger(Rong36KrCrawler.class);
 	
 	public static void main(String[] args) {
+		String workspace = "E:\\pan\\git\\dataace-crawler-platform";
 		CommonCrawler.addPipeline(new MongoPipeline());
 		try {
 			Request request = new Request("https://rong.36kr.com/api/search");
@@ -33,10 +34,10 @@ public class Rong36KrCrawler {
 			headers.put("Content-Type", "application/x-www-form-urlencoded");
 			request.setHeaders(headers);
 			
-			request = new Request("https://rong.36kr.com/api/dict/industry?type=e");
-			request.setTemplateId("rong36kr");
+			//request = new Request("https://rong.36kr.com/api/dict/industry?type=e");
+			//request.setTemplateId("rong36kr");
 			//request = new Request("https://krplus-cdn.b0.upaiyun.com/krplus/scripts/8ad19359.default.js");
-			TemplateConfig templateConfig = CommonCrawler.registTemplateConfig("D:\\peter\\git5\\dataace-crawler\\src\\main\\resources\\template\\rong36kr.xml");
+			TemplateConfig templateConfig = CommonCrawler.registTemplateConfig(workspace+"\\dataace-crawler\\src\\main\\resources\\template\\rong36kr.xml");
 			CommonCrawler.publish(templateConfig);
 			//CommonCrawler.addRequest(request);
 		} catch (Exception e) {

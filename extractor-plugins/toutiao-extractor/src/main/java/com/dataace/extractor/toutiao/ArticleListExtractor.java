@@ -16,6 +16,7 @@ import org.json.JSONObject;
 import com.dataace.crawler.download.Request;
 import com.dataace.crawler.extractor.Extractor;
 import com.dataace.crawler.persist.bean.Article;
+import com.dataace.crawler.util.Params;
 
 
 
@@ -67,14 +68,14 @@ public class ArticleListExtractor implements Extractor<Article>{
 			String originalSource = articleJson.getString("source");
 			String articleUrl = articleJson.getString("display_url");
 			article.setAbst(abst);
-			article.setCoummentCount(comments);
+			article.setCommentCount(comments);
 			article.setRecommendCount(recommends);
 			article.setImpressionCount(impressions);
 			article.setArticleCreateTime(createTime*1000);
 			article.setArticleDisplayTime(displayTime*1000);
 			Calendar c = Calendar.getInstance();
 			c.setTimeInMillis(article.getArticleCreateTime());
-			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			article.setArticleCreateTimeStr(format.format(c.getTime()));
 			c.setTimeInMillis(article.getArticleDisplayTime());
 			article.setArticleDisplayTimeStr(format.format(c.getTime()));
@@ -90,7 +91,32 @@ public class ArticleListExtractor implements Extractor<Article>{
 	}
 
 	public List<Request> split(String content, Map<String, Object> extras) {
-		// TODO Auto-generated method stub
+		
+		JSONObject jsonObj = new JSONObject(content);
+		JSONObject next=jsonObj.getJSONObject("next");
+		Long maxBehotTime = next.getLong("max_behot_time");
+		
+		Calendar c = Calendar.getInstance();
+		long now = c.getTimeInMillis();
+		if(now-1000*maxBehotTime>1000*60*60*24){
+			maxBehotTime=now/1000;
+		}
+		c.setTimeInMillis(maxBehotTime*1000);
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		logger.info("next maxBehotTime:{}",format.format(c.getTime()));
+		String orginalUrl = extras.get(Params.ORIGINAL_URL.toString()).toString();
+		String regex = "http://toutiao\\.com/api/article/recent/\\?source=2&count=20&category=news_tech&max_behot_time=(\\d+)&utm_source=toutiao&offset=0&[\\s\\S]+";
+		Pattern pattern = Pattern.compile(regex);
+		Matcher matcher = pattern.matcher(orginalUrl);
+		if(matcher.find()){
+			List<Request> requests = new ArrayList<Request>();
+			String oldMaxBehotTimeStr = matcher.group(1);
+			String url = orginalUrl.replace(oldMaxBehotTimeStr, maxBehotTime+"");
+			Request request = new Request(url);
+			requests.add(request);
+			return requests;
+		}
+		
 		return null;
 	}
 

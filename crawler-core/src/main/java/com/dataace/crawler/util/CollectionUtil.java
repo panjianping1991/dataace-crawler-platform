@@ -20,7 +20,7 @@ public class CollectionUtil {
 			Map<String,Object> result = new HashMap<String,Object>();
 			JSONObject jsonObj = new JSONObject(data);
 			for(String key:JSONObject.getNames(jsonObj)){
-				result.put(key, jsonObj.get(key));			
+				result.put(key, jsonObj.get(key)==null?null:jsonObj.get(key).toString());			
 			}
 		   return result;
 	}

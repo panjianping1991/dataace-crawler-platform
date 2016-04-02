@@ -13,9 +13,10 @@ public class ToutiaoCrawler {
 private static final Logger logger =  LogManager.getLogger(ToutiaoCrawler.class);
 	
 	public static void main(String[] args) {
+		String workspace = "E:\\pan\\git\\dataace-crawler-platform";
 		CommonCrawler.addPipeline(new MongoPipeline());
 		try {	
-			TemplateConfig templateConfig = CommonCrawler.registTemplateConfig("D:\\peter\\git5\\dataace-crawler\\src\\main\\resources\\template\\toutiao.xml");
+			TemplateConfig templateConfig = CommonCrawler.registTemplateConfig(workspace+"\\dataace-crawler\\src\\main\\resources\\template\\toutiao.xml");
 			CommonCrawler.publish(templateConfig);
 			//CommonCrawler.addRequest(request);
 		} catch (Exception e) {

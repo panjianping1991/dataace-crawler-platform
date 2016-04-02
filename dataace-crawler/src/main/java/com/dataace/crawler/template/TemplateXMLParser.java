@@ -46,6 +46,10 @@ public class TemplateXMLParser {
        
         String templateId = doc.select("template > id").text().trim();
         String dataSource = doc.select("template > dataSource").text().trim();
+        String maxDeepStr = doc.select("template > maxDeep").text().trim();
+        String scheduleIntervalStr = doc.select("template > scheduleInterval").text().trim();
+
+      
         TemplateConfig templateConfig = new TemplateConfig(templateId);
         templateConfig.setDataSource(dataSource);
         List<Processor> processors = parseProcessors(doc);
@@ -54,6 +58,12 @@ public class TemplateXMLParser {
         templateConfig.setProcessors(processors);
         templateConfig.setJarPaths(jarPaths);
         templateConfig.setSeedRequests(seedRequests);
+        if(null!=maxDeepStr&&maxDeepStr.matches("\\d+")){
+        	templateConfig.setMaxDeep(Integer.parseInt(maxDeepStr));
+        }
+        if(null!=scheduleIntervalStr&&scheduleIntervalStr.matches("\\d+")){
+        	templateConfig.setScheduleInterval(Integer.parseInt(scheduleIntervalStr));
+        }
         in.close();
         return templateConfig;
     }

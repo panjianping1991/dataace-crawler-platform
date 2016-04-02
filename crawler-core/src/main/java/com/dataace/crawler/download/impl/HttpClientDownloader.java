@@ -15,6 +15,7 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpRequestBase;
 import org.apache.http.client.methods.HttpUriRequest;
+import org.apache.http.entity.ByteArrayEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
@@ -35,12 +36,12 @@ public class HttpClientDownloader implements Downloader{
 	
 	public  String download(Request request) throws Exception{
 		
-		
+		logger.info("【Request】:{}",request);
 		HttpRequestBase httpRequest = null;
 		if(HttpMethod.POST==request.getHttpMethod()){
 			httpRequest = new HttpPost(request.getUrl());
 			setRequestHeaders(httpRequest, request.getHeaders());
-			setRequestBody(httpRequest, request.getParams(),request.getDecode());
+			setRequestBody(httpRequest, request.getParams(),request.getBody(),request.getDecode());
 		}else{
 			 httpRequest = new HttpGet(request.getUrl());	
 			 setRequestHeaders(httpRequest, request.getHeaders());
@@ -52,7 +53,7 @@ public class HttpClientDownloader implements Downloader{
 		
 	public static String download(HttpRequestBase httpRequest,String encode) throws Exception{
 	
-		logger.info("【Request】:【"+httpRequest.getMethod()+"\t"+httpRequest.getRequestLine()+"】");
+		
          String content=null;
 		 CloseableHttpClient httpClient = HttpClientManager.getHttpClient();
 		 
@@ -121,9 +122,11 @@ public class HttpClientDownloader implements Downloader{
 		 }
 	 }
 	 
-	 private static void setRequestBody(HttpRequest request,Map<String,String> params,String encode) throws UnsupportedEncodingException{
-		  
-	      if(null!=params){
+	 private static void setRequestBody(HttpRequest request,Map<String,String> params,String body,String encode) throws UnsupportedEncodingException{
+		  if(null!=body){
+			  HttpEntity entity = new ByteArrayEntity(body.getBytes(encode)); 
+			  ((HttpPost)request).setEntity(entity);
+		  }else if(null!=params){
 	    	 List <NameValuePair> nvps = new ArrayList <NameValuePair>();
 	       	for(String paramName:params.keySet()){
 	    

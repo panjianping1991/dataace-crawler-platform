@@ -18,6 +18,12 @@ public class TemplateConfig {
 	 */
 	private int failureQueueMaxRetryTimes=3;
 	
+	private int maxDeep=100;
+	
+	private int scheduleInterval=-1;
+	
+	private int initDelay = 0;
+	
 	private List<String> jarPaths;
 	
 	private List<Processor> processors;
@@ -35,6 +41,28 @@ public class TemplateConfig {
 
 	public void setDataSource(String dataSource) {
 		this.dataSource = dataSource;
+	}
+
+
+	
+	public int getMaxDeep() {
+		return maxDeep;
+	}
+
+
+	public void setMaxDeep(int maxDeep) {
+		this.maxDeep = maxDeep;
+	}
+
+	
+
+	public int getInitDelay() {
+		return initDelay;
+	}
+
+
+	public void setInitDelay(int initDelay) {
+		this.initDelay = initDelay;
 	}
 
 
@@ -75,6 +103,17 @@ public class TemplateConfig {
 
 	public void setFailureQueueMaxRetryTimes(int failureQueueMaxRetryTimes) {
 		this.failureQueueMaxRetryTimes = failureQueueMaxRetryTimes;
+	}
+
+	
+
+	public int getScheduleInterval() {
+		return scheduleInterval;
+	}
+
+
+	public void setScheduleInterval(int scheduleInterval) {
+		this.scheduleInterval = scheduleInterval;
 	}
 
 

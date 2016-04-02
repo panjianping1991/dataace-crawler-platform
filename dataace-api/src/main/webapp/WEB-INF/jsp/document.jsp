@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="zh-cn">
 <head>
-<link rel="stylesheet" href="/webant-api/css/document.css"/>
+<link rel="stylesheet" href="/datace-api/css/document.css"/>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 <title>爬虫数据 - 接口文档</title>
 </head>

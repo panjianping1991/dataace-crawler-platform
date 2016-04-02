@@ -8,7 +8,10 @@ import java.util.Map;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.concurrent.FutureTask;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.ThreadPoolExecutor.DiscardPolicy;
@@ -42,6 +45,9 @@ public class CommonCrawler {
     private static BlockingTaskQueue<Request> failureQueue = new BlockingTaskQueue<Request>(1<<12);
     private static BlockingTaskQueue<FutureTask<List<Map<String,Object>>>> futureQueue = new BlockingTaskQueue<FutureTask<List<Map<String,Object>>>>(1<<12);
     private static PipelineChain pipelineChain = new PipelineChain();
+    private static final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
+
+
     private static ExecutorService executor =new ThreadPoolExecutor(2,2, 120, TimeUnit.SECONDS, new ArrayBlockingQueue<Runnable>(8192), new TaskDiscardPolicy());
     
     public static TemplateConfig registTemplateConfig(String templatePath) throws IOException{
@@ -54,17 +60,28 @@ public class CommonCrawler {
 		return templateConfig;
 	}
     
-    public static void publish(TemplateConfig templateConfig) {
-    	List<Request> requests = templateConfig.getSeedRequests();
-    	for(Request request:requests){
-    		try {
-				addRequest(request);
-			} catch (InvalidOperationException e) {			
-				e.printStackTrace();
-			} catch (InterruptedException e) {
-				e.printStackTrace();
+    public static void publish(final TemplateConfig templateConfig) {
+    	logger.info("publish a template,templateId={},scheduleInterval={} minutes",templateConfig.getTemplateId(),templateConfig.getScheduleInterval());
+    	scheduler.scheduleAtFixedRate(new Runnable(){
+
+			public void run() {
+				List<Request> requests = templateConfig.getSeedRequests();
+		    	for(Request request:requests){
+		    		try {
+						addRequest(request);
+					} catch (InvalidOperationException e) {			
+						e.printStackTrace();
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+		    	}
+		    
 			}
-    	}
+    		
+    	}, templateConfig.getInitDelay(), templateConfig.getScheduleInterval()*60, TimeUnit.SECONDS);
+    	
+    	
+    	
     }
     
     public static void addPipeline(Pipeline pipeline){
@@ -194,6 +211,10 @@ public class CommonCrawler {
 					extras = new HashMap<String,Object>();
 				}
 				Extractor<?> extractor = ExtractorRoute.getExtractor(request);
+				if(null==extractor){
+					logger.error("failed to find the extractor for the request={}",request.getUrl());
+					return null;
+				}
 			
 				TemplateConfig templateConfig = ApplicationContext.getInstance().getTemplateConfigHolder().getTemplateConfig(request);
 				if(extractor.isFailed(content, extras)){
@@ -209,6 +230,10 @@ public class CommonCrawler {
 					if(null!=splitRequests){
 						for(Request splitRequest:splitRequests){
 							splitRequest.setLevel(request.getLevel()+1);
+							if(splitRequest.getLevel()>templateConfig.getMaxDeep()){
+								logger.info("extends maxDeep,request={}",request);
+								continue;
+							}
 							splitRequest.setExtras(extras);
 							splitRequest.setTemplateId(request.getTemplateId());
 							addRequest(splitRequest);
@@ -217,6 +242,7 @@ public class CommonCrawler {
 					}
 					
 					List<Map<String,Object>> results = new ArrayList<Map<String,Object>>();
+					if(null!=datas)
 					for(Object data:datas){
 						Map<String,Object> result = CollectionUtil.toMap(data);	
 						MongoBean mongoBean = data.getClass().getAnnotation(MongoBean.class);
@@ -231,6 +257,7 @@ public class CommonCrawler {
 						String dataSource = ApplicationContext.getInstance().getTemplateConfigHolder().getTemplateConfig(request).getDataSource();
 						result.put("dataSource", dataSource);
 						result.put("_id", dataSource+"_"+result.remove("id"));
+						
 						results.add(result);
 					}
 					return results;

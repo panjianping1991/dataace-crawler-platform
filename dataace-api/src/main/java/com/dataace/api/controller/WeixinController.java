@@ -11,15 +11,20 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.dataace.api.bean.Response;
+
 
 
 
 @Controller
-
+@RequestMapping(value = "/weixin")
 public class WeixinController {
 	private final Logger logger = LoggerFactory.getLogger(GlobalController.class);
 	
-	@RequestMapping(value = "/weixin")
+	@RequestMapping(value = "/")
 	public void  service(HttpServletRequest req, HttpServletResponse resp){
 		try {
 			req.setCharacterEncoding("utf-8");
@@ -45,5 +50,11 @@ public class WeixinController {
 			
 		}
 	}
+	
+	@RequestMapping(value="/article",method = RequestMethod.GET)
+	@ResponseBody
+	public Response article(HttpServletRequest request){
+    	return null;
+    } 
 
 }

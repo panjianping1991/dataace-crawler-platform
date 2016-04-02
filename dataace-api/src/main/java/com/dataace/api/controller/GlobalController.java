@@ -30,7 +30,7 @@ public class GlobalController {
 	 public Map<String,String> fieldDescription(){
 		      Map<String,String> map = new HashMap<String,String>();
 		      map.put("errorMsg", "无效请求");
-		      map.put("api-document", "http://"+appConfig.getHost()+"/webant-api/document/");		        
+		      map.put("api-document", "http://"+appConfig.getHost()+"/dataace-api/document/");		        
 		      return map;
      }
 	 

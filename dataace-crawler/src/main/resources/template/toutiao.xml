@@ -8,7 +8,9 @@
     <!--模板描述-->
     <description>模板描述</description>
    	<!-- 深度 -->
-    <maxDeep>100000000</maxDeep>
+    <maxDeep>10</maxDeep>
+    <!-- 每隔多长时间跑一次，分钟 -->
+    <scheduleInterval>30</scheduleInterval>
     
     <dataSource>TOUTIAO</dataSource>
     
@@ -16,7 +18,7 @@
 	<seeds>
 	    <request>
 	       <httpMethod>GET</httpMethod>
-	       <url>http://toutiao.com/api/article/recent/?source=2&count=20&category=news_tech&max_behot_time=1459490351.8&utm_source=toutiao&offset=0&_=1459490326757</url>
+	       <url>http://toutiao.com/api/article/recent/?source=2&count=20&category=news_tech&max_behot_time=1459483151&utm_source=toutiao&offset=0&_=1459490326757</url>
 	       <httpHeaders>
 	           <httpHeader>
 	                <key></key>
@@ -58,7 +60,7 @@
 		<proxy>false</proxy>
 	</http>
 	<jarPaths>
-	        <jarPath>file:///E:\repo\org\dataace\toutiao-extractor\0.0.1\toutiao-extractor-0.0.1.jar</jarPath>
+	        <jarPath>file:///C:\Users\pan\.m2\repository\org\dataace\toutiao-extractor\0.0.1-SNAPSHOT\toutiao-extractor-0.0.1-SNAPSHOT.jar</jarPath>
 	 </jarPaths>
 	<processors>
 	    

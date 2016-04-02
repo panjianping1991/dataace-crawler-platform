@@ -13,7 +13,19 @@ public class Request {
 	private String decode="utf-8";
 	private int retryTimes=0;
 	private Map<String,Object> extras;
+	private String body;
 	
+	
+	
+	
+	public String getBody() {
+		return body;
+	}
+
+	public void setBody(String body) {
+		this.body = body;
+	}
+
 	public Request(String url){
 		this.url = url;
 	}	
@@ -85,6 +97,13 @@ public class Request {
 
 	public void setExtras(Map<String, Object> extras) {
 		this.extras = extras;
+	}
+
+	@Override
+	public String toString() {
+		return "Request [templateId=" + templateId + ", level=" + level
+				+ ", url=" + url + ", httpMethod=" + httpMethod + ", decode="
+				+ decode + ", retryTimes=" + retryTimes + "]";
 	}
 	
 	
