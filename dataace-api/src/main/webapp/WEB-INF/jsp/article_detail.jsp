@@ -10,6 +10,11 @@
         <link rel="stylesheet" href="/dataace-api/css/weui.css"/>
         <script src="http://apps.bdimg.com/libs/angular.js/1.4.6/angular.min.js"></script>
 <title>创投热点</title>
+<style>
+img{
+ width:300px;
+}
+</style>
 
 
 </head>
