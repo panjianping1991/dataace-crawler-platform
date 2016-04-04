@@ -3,6 +3,7 @@ package com.dataace.extractor.toutiao;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -93,6 +94,28 @@ public class ArticleListExtractor implements Extractor<Article>{
 	public List<Request> split(String content, Map<String, Object> extras) {
 		
 		JSONObject jsonObj = new JSONObject(content);
+		List<Request> requests = new ArrayList<Request>();
+		
+		//分裂出详情页
+		JSONArray jsonArray=jsonObj.getJSONArray("data");
+		for(int i=0;i<jsonArray.length();i++){
+			JSONObject articleJson = jsonArray.getJSONObject(i);
+			String articleUrl = articleJson.getString("display_url");
+			 String itemUrl = articleJson.getString("item_source_url");
+		        String regex = "/item/(\\d+)/";
+		        Pattern pattern = Pattern.compile(regex);
+		        Matcher matcher = pattern.matcher(itemUrl);
+		        if(matcher.find()){
+		        	String id = matcher.group(1);
+		        	Request request = new Request(articleUrl); 
+		        	request.setExtras(new HashMap<String,Object>());
+		        	request.getExtras().put("originalId", id);
+					requests.add(request);
+		        }
+			
+		}
+		
+		//分裂出下一页,下一页的新闻更旧
 		JSONObject next=jsonObj.getJSONObject("next");
 		Long maxBehotTime = next.getLong("max_behot_time");
 		
@@ -108,16 +131,17 @@ public class ArticleListExtractor implements Extractor<Article>{
 		String regex = "http://toutiao\\.com/api/article/recent/\\?source=2&count=20&category=news_tech&max_behot_time=(\\d+)&utm_source=toutiao&offset=0&[\\s\\S]+";
 		Pattern pattern = Pattern.compile(regex);
 		Matcher matcher = pattern.matcher(orginalUrl);
+
 		if(matcher.find()){
-			List<Request> requests = new ArrayList<Request>();
 			String oldMaxBehotTimeStr = matcher.group(1);
 			String url = orginalUrl.replace(oldMaxBehotTimeStr, maxBehotTime+"");
 			Request request = new Request(url);
-			requests.add(request);
-			return requests;
+			requests.add(request);			
 		}
 		
-		return null;
+		
+		
+		return requests;
 	}
 
 }

@@ -1,5 +1,7 @@
 package com.dataace.crawler.persist.bean;
 
+import java.util.List;
+
 import com.dataace.crawler.annotation.MongoBean;
 import com.dataace.crawler.persist.MongoCollection;
 
@@ -22,11 +24,21 @@ public class Article {
 	private String title;
 	private String dataSource;
 	private String articleUrl;
-	private String content;
+	private Content content;
+	private String contentStr;
 	private String tag;
 	
 	private String originalDataSource;
 	private String orginalUrl;
+	
+	
+
+	public String getContentStr() {
+		return contentStr;
+	}
+	public void setContentStr(String contentStr) {
+		this.contentStr = contentStr;
+	}
 	public String getId() {
 		return id;
 	}
@@ -111,12 +123,14 @@ public class Article {
 	public void setArticleUrl(String articleUrl) {
 		this.articleUrl = articleUrl;
 	}
-	public String getContent() {
+	
+	public Content getContent() {
 		return content;
 	}
-	public void setContent(String content) {
+	public void setContent(Content content) {
 		this.content = content;
 	}
+	
 	public String getTag() {
 		return tag;
 	}
@@ -135,8 +149,70 @@ public class Article {
 	public void setOrginalUrl(String orginalUrl) {
 		this.orginalUrl = orginalUrl;
 	}
-
 	
+	public class Content{
+		private List<Section> sections;
+		
+		
+		public List<Section> getSections() {
+			return sections;
+		}
+
+
+
+		public void setSections(List<Section> sections) {
+			this.sections = sections;
+		}
+
+
+
+		public class Section{
+			private String title;
+			private String content;
+			public String getTitle() {
+				return title;
+			}
+			public void setTitle(String title) {
+				this.title = title;
+			}
+			public String getContent() {
+				return content;
+			}
+			public void setContent(String content) {
+				this.content = content;
+			}
+			
+			
+		}
+	}
+
+	public class Auther{
+		
+		private String name;
+		private String originalId;
+		private String logo;
+		
+		public String getName() {
+			return name;
+		}
+		public void setName(String name) {
+			this.name = name;
+		}
+		public String getOriginalId() {
+			return originalId;
+		}
+		public void setOriginalId(String originalId) {
+			this.originalId = originalId;
+		}
+		public String getLogo() {
+			return logo;
+		}
+		public void setLogo(String logo) {
+			this.logo = logo;
+		}
+		
+		
+	}
 	
 	
 	

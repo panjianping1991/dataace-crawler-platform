@@ -15,34 +15,6 @@
 </head>
 <body>
 
-
-
-<div class="weui_panel">
-    <div class="weui_panel_hd">创投热点</div>
-    <div class="weui_panel_bd" ng-app="myApp" ng-controller="customersCtrl">
-        <div class="weui_media_box weui_media_text" ng-repeat="article in articles">
-        <a href="{{article.articleUrl}}" style="color:#000000">
-            <h4 class="weui_media_title">{{article.title}}</h4>
-            <div class="weui_media_hd" >
-                <img width="120px" class="weui_media_appmsg_thumb" src="{{article.imageUrl}}" alt="{{article.imageUrl}}">
-               </div>
-            <p class="weui_media_desc" style="padding-top:10px;">{{ article.abst }}</p>
-            <ul class="weui_media_info">
-                <li class="weui_media_info_meta">{{ article.originalDataSource }}</li>
-                <li class="weui_media_info_meta">{{article.articleDisplayTimeStr}}</li>
-                <li class="weui_media_info_meta weui_media_info_meta_extra">其它信息</li>
-            </ul>
-           </a> 
-        </div>
-        
-        
-                  <a class="weui_panel_ft"  ng-click="more()",href="javascript:void(0);">查看更多</a>
-    </div>
-</div>
-
-
-
-<%--
 <div class="weui_panel weui_panel_access">
     <div class="weui_panel_hd">创投热点</div>
     <div class="weui_panel_bd">
@@ -72,7 +44,7 @@
         
     </div>
     
-</div> --%>
+</div>
 
 <%-- <div ng-app="myApp" ng-controller="customersCtrl"> 
 

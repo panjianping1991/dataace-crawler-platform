@@ -43,6 +43,7 @@ public class MongoPipeline implements Pipeline{
 					logger.debug(" {} one data, _id={}, collectionName={}", EventType.UPDATE, _id,collection.getName());
 				
 					qr = new HashMap<String,Object>();
+					
 					qr.putAll(model);
 					qr.put(MongoCollectionField.CREATE_TIME.getName(),Calendar.getInstance().getTimeInMillis());
 					qr.put(MongoCollectionField.UPDATE_TIME.getName(),Calendar.getInstance().getTimeInMillis());

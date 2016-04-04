@@ -6,6 +6,7 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataAccessException;
@@ -20,6 +21,8 @@ import org.springframework.stereotype.Service;
 import com.dataace.api.service.IArticleService;
 import com.dataace.crawler.persist.MongoCollection;
 import com.dataace.crawler.persist.bean.Article;
+import com.dataace.crawler.persist.bean.Article.Content;
+import com.google.gson.Gson;
 import com.mongodb.DBObject;
 import com.mongodb.MongoException;
 
@@ -42,6 +45,7 @@ public class ArticleService implements IArticleService{
 			 }
 			 query.addCriteria(Criteria.where(name).is(criterias.get(name)));
 		 }	 
+		query.addCriteria(Criteria.where("content").exists(true));
 		query.with(new Sort(Direction.DESC, "articleDisplayTime"));
 		query.limit(pageSize);
 		
@@ -99,7 +103,13 @@ public class ArticleService implements IArticleService{
 		String displayTime = dbObject.get("articleDisplayTimeStr")==null?null:dbObject.get("articleDisplayTimeStr").toString();
 		String title = dbObject.get("title")==null?null:dbObject.get("title").toString();
 		String abst = dbObject.get("abst")==null?null:dbObject.get("abst").toString();
-
+		String content = dbObject.get("content")==null?null:dbObject.get("content").toString();
+		if(null!=content){
+			content=content.replace("\\\\", "");
+			Gson gson = new Gson();
+			article.setContent(gson.fromJson(content, Content.class));
+			article.setArticleUrl("details/weixin/"+id);
+		}
 		Integer recommendCount =dbObject.get("recommendCount")==null?null:Integer.parseInt(dbObject.get("recommendCount").toString().trim());
 		Integer commentCount  = dbObject.get("commentCount")==null?null:Integer.parseInt(dbObject.get("commentCount").toString().trim());
 		Integer impressionCount  = dbObject.get("impressionCount")==null?null:Integer.parseInt(dbObject.get("impressionCount").toString().trim());
@@ -109,13 +119,17 @@ public class ArticleService implements IArticleService{
 		article.setId(id);
 		article.setKeywords(keywords);
 		article.setArticleDisplayTimeStr(displayTime);
-		article.setArticleUrl(articleUrl);
+		if(null==article.getArticleUrl()){
+			article.setArticleUrl(articleUrl);
+		}
+		
 		article.setAbst(abst);
 		article.setTag(tag);
 		article.setTitle(title);
 		article.setImageUrl(imageUrl);
 		article.setRecommendCount(recommendCount);
 		article.setCommentCount(commentCount);
+		article.setContentStr(new JSONObject(content).toString());
 		article.setImpressionCount(impressionCount);
 		article.setOriginalDataSource(originalDataSource);
 		

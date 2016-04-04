@@ -116,6 +116,13 @@ private final Logger logger = LoggerFactory.getLogger(CompanyController.class);
 		      model.addAttribute("host", appConfig.getHost());
 		      return "article";
      }
+	 
+		@RequestMapping(value="/details/weixin/{id}",method = RequestMethod.GET)
+		public String getDetailById(@PathVariable String id,Model model,HttpServletRequest request) {
+			model.addAttribute("id", id);
+			return "article_detail";
+	    	
+	    }
 	
 	
 

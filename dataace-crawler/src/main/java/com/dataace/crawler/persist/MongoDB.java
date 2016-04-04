@@ -188,12 +188,18 @@ public class MongoDB {
 			logger.error("objMap is null");
 			return null;
 		}
+		Map<String,Object> notEmptyFields = new HashMap<String,Object>();
+		for(String key:objMap.keySet()){
+			if(null!=objMap.get(key)&&!"".equals(objMap.get(key).toString())){
+				notEmptyFields.put(key, objMap.get(key));
+			}
+		}
 		Map<String, Object> criteriaMap = new HashMap<String,Object>();
 		Object pageOriginalIdObject = objMap.get(MongoCollectionField.ID.getName()); 
 		if(null != pageOriginalIdObject){
 			// 默认的记录就不会增加新的document	
 			criteriaMap.put(MongoCollectionField.ID.getName(), pageOriginalIdObject);
-			return getDBCollection(collection.getName()).update(new BasicDBObject(criteriaMap), new BasicDBObject("$set",objMap));
+			return getDBCollection(collection.getName()).update(new BasicDBObject(criteriaMap), new BasicDBObject("$set",notEmptyFields));
 		}
 		
 		return null;

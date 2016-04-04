@@ -11,7 +11,6 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.FutureTask;
 import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.ThreadPoolExecutor.DiscardPolicy;
@@ -48,7 +47,7 @@ public class CommonCrawler {
     private static final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
 
 
-    private static ExecutorService executor =new ThreadPoolExecutor(2,2, 120, TimeUnit.SECONDS, new ArrayBlockingQueue<Runnable>(8192), new TaskDiscardPolicy());
+    private static ExecutorService executor =new ThreadPoolExecutor(1,1, 120, TimeUnit.SECONDS, new ArrayBlockingQueue<Runnable>(8192), new TaskDiscardPolicy());
     
     public static TemplateConfig registTemplateConfig(String templatePath) throws IOException{
 		TemplateConfig templateConfig = TemplateXMLParser.parseTemplate(templatePath);
@@ -234,6 +233,10 @@ public class CommonCrawler {
 								logger.info("extends maxDeep,request={}",request);
 								continue;
 							}
+							if(null!=splitRequest.getExtras()){
+								extras.putAll(splitRequest.getExtras());
+							}
+							 
 							splitRequest.setExtras(extras);
 							splitRequest.setTemplateId(request.getTemplateId());
 							addRequest(splitRequest);
