@@ -123,6 +123,29 @@ private final Logger logger = LoggerFactory.getLogger(CompanyController.class);
 			return "article_detail";
 	    	
 	    }
+		
+		
+
+		@RequestMapping(value="/details/weixin/a",method = RequestMethod.GET)
+		public String getA(@PathVariable String id,Model model,HttpServletRequest request) {
+			model.addAttribute("id", id);
+			return "a";
+	    	
+	    }
+		
+		@RequestMapping(value="/details/weixin/b",method = RequestMethod.GET)
+		public String getB(@PathVariable String id,Model model,HttpServletRequest request) {
+			model.addAttribute("id", id);
+			return "b";
+	    	
+	    }
+		
+		@RequestMapping(value="/details/weixin/c",method = RequestMethod.GET)
+		public String getC(@PathVariable String id,Model model,HttpServletRequest request) {
+			model.addAttribute("id", id);
+			return "c";
+	    	
+	    }
 	
 	
 
