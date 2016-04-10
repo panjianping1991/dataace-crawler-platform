@@ -5,6 +5,7 @@ public enum MongoCollection {
 	COMPANY("company_original","公司信息"),
 	ARTICLE("article_original","新闻"),
 	INVESTOR("investor","投资人"),
+	BLACKNAME("blackname_original","信用黑名单"),
 	DATA_SOURCE("data_source","数据来源");
 	
 	private String name;

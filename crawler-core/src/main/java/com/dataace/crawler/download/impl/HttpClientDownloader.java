@@ -111,6 +111,7 @@ public class HttpClientDownloader implements Downloader{
 	
 	
 	public static void setRequestHeaders(HttpUriRequest httpRequest,Map<String,String> reqHeaders){
+		 httpRequest.addHeader("User-Agent", "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.71 Safari/537.36");
 		 if(null!=reqHeaders&&null!=reqHeaders.keySet()){
 			 for(String key:reqHeaders.keySet()){
 				 String value=reqHeaders.get(key);

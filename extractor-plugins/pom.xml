@@ -31,5 +31,6 @@
   <modules>
   	<module>rong36kr-extractor</module>
   	<module>toutiao-extractor</module>
+  	<module>ppdai-extractor</module>
   </modules>
 </project>
