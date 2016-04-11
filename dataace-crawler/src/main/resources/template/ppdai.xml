@@ -71,7 +71,8 @@
 		<processor type="java">
 			<regexs>
 				<urlRegs>
-					<urlReg>http://www.ppdai.com/blacklist/2016</urlReg>
+					<urlReg>http://www.ppdai.com/blacklist/\d+</urlReg>
+					<urlReg>http://www.ppdai.com/blacklist/\d+_m0_p\d+</urlReg>
 				</urlRegs>
 			</regexs>
 			<page>

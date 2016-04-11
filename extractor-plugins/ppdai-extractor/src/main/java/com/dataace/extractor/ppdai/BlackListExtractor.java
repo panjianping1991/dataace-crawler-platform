@@ -11,6 +11,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import com.dataace.crawler.download.Request;
@@ -31,7 +32,7 @@ public class BlackListExtractor implements Extractor<BlackName>{
 	}
 
 	public List<BlackName> extract(String content, Map<String, Object> extras) {
-		// TODO Auto-generated method stub
+		
 		return null;
 	}
 
@@ -65,6 +66,26 @@ public class BlackListExtractor implements Extractor<BlackName>{
 			
 			
 		}
+		if(!originalUrl.contains("m0_p")){
+			Element lastEle = doc.select(".fen_ye_nav >table >tbody > tr >td").last();
+			String pageRegex = "共(\\d+)页";
+			Pattern pattern = Pattern.compile(pageRegex);
+			Matcher matcher = pattern.matcher(lastEle.text().trim());
+			if(matcher.find()){
+				int totalPage = Integer.parseInt(matcher.group(1));
+				for(int i=2;i<=totalPage;i++){
+					String listUrl = "http://www.ppdai.com/blacklist/2016_m0_p"+i;
+					Request request = new Request(listUrl);
+					Map<String,String> headers = new HashMap<String,String>();
+					headers.put("Host", "www.ppdai.com");
+					headers.put("User-Agent", "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.71 Safari/537.36");
+					request.setHeaders(headers);
+					requests.add(request);
+				}
+			}
+			
+		}
+		
 		return requests;
 	}
 

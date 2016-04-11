@@ -52,6 +52,7 @@ public class BlackDetailExtractor implements Extractor<BlackName>{
 			String overdueMoney = fields.get(4).text().replace("¥", "").replace(",", "");;
 			logger.info("loanId:{},termOfLoad:{},loanDate:{},overdueDays:{},overDueMoney:{},loanAmount:{}",loanId,termOfLoan,loanDate,overdueDays,overdueMoney,loanAmount);
 			Overdue overdue = new Overdue();
+			overdue.setLoanPlatform("拍拍贷");
 			overdue.setLoanId(loanId);
 			overdue.setTermOfLoan(termOfLoan);
 			overdue.setLoanDate(loanDate);
@@ -83,7 +84,6 @@ public class BlackDetailExtractor implements Extractor<BlackName>{
 	}
 
 	public List<Request> split(String content, Map<String, Object> extras) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
