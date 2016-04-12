@@ -47,7 +47,7 @@ public class CommonCrawler {
     private static final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
 
 
-    private static ExecutorService executor =new ThreadPoolExecutor(1,1, 120, TimeUnit.SECONDS, new ArrayBlockingQueue<Runnable>(8192), new TaskDiscardPolicy());
+    private static ExecutorService executor =new ThreadPoolExecutor(5,5, 120, TimeUnit.SECONDS, new ArrayBlockingQueue<Runnable>(8192), new TaskDiscardPolicy());
     
     public static TemplateConfig registTemplateConfig(String templatePath) throws IOException{
 		TemplateConfig templateConfig = TemplateXMLParser.parseTemplate(templatePath);

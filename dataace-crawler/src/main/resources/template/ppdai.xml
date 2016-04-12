@@ -10,7 +10,7 @@
    	<!-- 深度 -->
     <maxDeep>30</maxDeep>
     <!-- 每隔多长时间跑一次，分钟 -->
-    <scheduleInterval>30</scheduleInterval>
+    <scheduleInterval>300</scheduleInterval>
     
     <dataSource>PPDAI</dataSource>
     
