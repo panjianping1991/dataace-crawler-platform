@@ -126,23 +126,21 @@ private final Logger logger = LoggerFactory.getLogger(CompanyController.class);
 		
 		
 
-		@RequestMapping(value="/details/weixin/a",method = RequestMethod.GET)
-		public String getA(@PathVariable String id,Model model,HttpServletRequest request) {
-			model.addAttribute("id", id);
+		@RequestMapping(value="/testa",method = RequestMethod.GET)
+		public String getA(Model model,HttpServletRequest request) {
+		
 			return "a";
 	    	
 	    }
 		
-		@RequestMapping(value="/details/weixin/b",method = RequestMethod.GET)
-		public String getB(@PathVariable String id,Model model,HttpServletRequest request) {
-			model.addAttribute("id", id);
+		@RequestMapping(value="/testb",method = RequestMethod.GET)
+		public String getB(Model model,HttpServletRequest request) {
 			return "b";
 	    	
 	    }
 		
-		@RequestMapping(value="/details/weixin/c",method = RequestMethod.GET)
-		public String getC(@PathVariable String id,Model model,HttpServletRequest request) {
-			model.addAttribute("id", id);
+		@RequestMapping(value="/testc",method = RequestMethod.GET)
+		public String getC(Model model,HttpServletRequest request) {
 			return "c";
 	    	
 	    }
