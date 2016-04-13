@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<template>
+    <!--模板id，创建时由程序自动生成-->
+    <id>p2p12580</id>
+    <!--模板名称-->
+    <name>广州国土局房源交易记录</name>
+    <!--模板描述-->
+    <description>模板描述</description>
+   	<!-- 深度 -->
+    <maxDeep>30</maxDeep>
+    <!-- 每隔多长时间跑一次，分钟 -->
+    <scheduleInterval>300</scheduleInterval>
+    <!-- 每个节点最多使用多少个线程来跑这个template任务 -->
+    <maxThreadsPerNode>5</maxThreadsPerNode>
+    
+    <dataSource>P2P12580</dataSource>
+    
+	<!--模板和种子地址，支持一个模板同时爬取多个种子的数据-->
+	<seeds>
+	    <request>
+	       <httpMethod>POST</httpMethod>
+	       <url>http://www.p2p12580.com/blacklist_search.asp</url>
+	       <httpHeaders>
+	           <httpHeader>
+	                <key>Host</key>
+	                <value>www.p2p12580.com</value>
+	           </httpHeader>
+	           <httpHeader>
+	                <key>User-Agent</key>
+	                <value>Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.125 Safari/537.36</value>
+	           </httpHeader>
+	           <httpHeader>
+	                <key>Content-Type</key>
+	                <value>application/x-www-form-urlencoded</value>
+	           </httpHeader>
+	       </httpHeaders>
+	       <parameters>
+	           <parameter>
+	                <key></key>
+	                <value></value>
+	          </parameter>
+	       </parameters>
+	       <requestBody>txtKeyWord=&id=0&Submit=%CB%D1++%CB%F7</requestBody>
+	    </request>
+		
+	</seeds>
+
+	<!--爬取两个页面的间隔时间，用于控制爬取网页的频度-->
+	<pageSleepTime>2000</pageSleepTime>
+	<messageQueue>
+		<!--创建包含等爬取URL的MQ消息时，每次所携带的URL数据量-->
+		<urlSize>50</urlSize>
+		<!--创建包含已抽取数据的MQ消息时，每次所携带的数据量-->
+		<dataSize>50</dataSize>
+	</messageQueue>
+	
+	<http>
+		<cookie></cookie>
+		<userAgent>Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.71 Safari/537.36</userAgent>
+		<!--连接超时时间-->
+		<connectionTimeout>5000</connectionTimeout>
+		<!--请求超时时间-->
+		<soTimeout>10000</soTimeout>
+		<encoding>utf-8</encoding>
+		<!-- 下载异常时马上重新尝试的次数（不会将url添加到队列） -->
+		<retryTimes>3</retryTimes>
+		<!-- 下载异常失败之后，重试的次数（将url重新添加队列中） -->
+		<cycleRetryTimes>8</cycleRetryTimes>
+		<contentType>text/xml; charset=utf-8</contentType>
+		<proxy>false</proxy>
+	</http>
+	<jarPaths>
+	        <jarPath>file:///C:\Users\pan\.m2\repository\org\dataace\p2p12580-extractor\0.0.1-SNAPSHOT\p2p12580-extractor-0.0.1-SNAPSHOT.jar</jarPath>
+	 </jarPaths>
+	<processors>
+	
+		<processor type="java">
+			<regexs>
+				<urlRegs>
+					<urlReg>http://www.p2p12580.com/blacklist_search.asp</urlReg>
+					<urlReg>http://www.p2p12580.com/blacklist_search.asp\?page=\d+&id=0&strKeyWord=</urlReg>
+				</urlRegs>
+			</regexs>
+			<page>
+				<props>
+					<prop key="encoding">utf-8</prop><!-- 页面级别的参数，在downloader页面的时候会用到 -->
+					<prop key="recrawl">604800000</prop><!-- 该url重爬的时间间隔限制 -->					
+				</props>
+			</page>
+			<target>
+				<class>com.dataace.extractor.p2p12580.BlackListExtractor</class>
+				<props>
+				</props>
+			</target>
+		</processor>
+		
+		
+		
+		
+	</processors>
+</template>

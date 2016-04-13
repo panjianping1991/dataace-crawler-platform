@@ -105,6 +105,7 @@ public class TemplateXMLParser {
     	for(Element ele:eles){
     		String url = ele.select("url").text().trim();
     		String method = ele.select("httpMethod").text().trim();
+    		String requestBody = ele.select("requestBody").text().trim();
     		Map<String,String> headers = new HashMap<String,String>();
     		Elements headerEles = ele.select("httpHeaders > httpHeader");
     		if(null!=headerEles){
@@ -134,6 +135,7 @@ public class TemplateXMLParser {
     		request.setHttpMethod(HttpMethod.valueOf(method.toUpperCase()));
     		request.setHeaders(headers);
     		request.setParams(params);
+    		request.setBody(requestBody);
     		requests.add(request);
     		
     	}

@@ -32,5 +32,6 @@
   	<module>rong36kr-extractor</module>
   	<module>toutiao-extractor</module>
   	<module>ppdai-extractor</module>
+  	<module>p2p12580-extractor</module>
   </modules>
 </project>

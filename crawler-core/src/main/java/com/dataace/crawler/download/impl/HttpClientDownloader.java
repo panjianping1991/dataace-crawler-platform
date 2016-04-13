@@ -82,7 +82,7 @@ public class HttpClientDownloader implements Downloader{
 					 response.close();				 
 				 }
 				 httpRequest.releaseConnection();
-				 throw new Exception("Unable to download url: " + httpRequest.getURI().getPath()+",statusCode:"+statusCode);
+				 throw new Exception("Unable to download url: " + httpRequest.getURI().getPath()+",statusCode:"+statusCode+",msg:"+response.getStatusLine().getReasonPhrase());
 			 }else{
 				 //String contentType = response.getFirstHeader("Content-Type").toString();
 				 //logger.debug("contentType:"+contentType);
