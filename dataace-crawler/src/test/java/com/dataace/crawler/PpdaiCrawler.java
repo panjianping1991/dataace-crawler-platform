@@ -11,7 +11,7 @@ public class PpdaiCrawler {
 private static final Logger logger =  LogManager.getLogger(ToutiaoCrawler.class);
 	
 	public static void main(String[] args) {
-		String workspace = "E:\\pan\\git\\dataace-crawler-platform";
+		String workspace = "D:\\peter\\dataace\\dataace-crawler-platform";
 		CommonCrawler.addPipeline(new MongoPipeline());
 		try {	
 			TemplateConfig templateConfig = CommonCrawler.registTemplateConfig(workspace+"\\dataace-crawler\\src\\main\\resources\\template\\ppdai.xml");

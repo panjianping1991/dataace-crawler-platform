@@ -32,6 +32,8 @@ public class TemplateConfig {
 	
 	private String dataSource;
 	
+	private int maxThreadsPerNode=30;
+	
 	
 	
 	public String getDataSource() {
@@ -134,6 +136,16 @@ public class TemplateConfig {
 
 	public void setProcessors(List<Processor> processors) {
 		this.processors = processors;
+	}
+
+
+	public int getMaxThreadsPerNode() {
+		return maxThreadsPerNode;
+	}
+
+
+	public void setMaxThreadsPerNode(int maxThreadsPerNode) {
+		this.maxThreadsPerNode = maxThreadsPerNode;
 	}
 	
 	

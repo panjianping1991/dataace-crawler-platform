@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.Callable;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.FutureTask;
@@ -14,6 +15,7 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.ThreadPoolExecutor.DiscardPolicy;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -44,10 +46,12 @@ public class CommonCrawler {
     private static BlockingTaskQueue<Request> failureQueue = new BlockingTaskQueue<Request>(1<<12);
     private static BlockingTaskQueue<FutureTask<List<Map<String,Object>>>> futureQueue = new BlockingTaskQueue<FutureTask<List<Map<String,Object>>>>(1<<12);
     private static PipelineChain pipelineChain = new PipelineChain();
+    private static final AtomicInteger processSuccessCount = new AtomicInteger(0);
     private static final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
+    private static final Map<String,AtomicInteger> runningPerTemplate = new ConcurrentHashMap<String,AtomicInteger>();
 
 
-    private static ExecutorService executor =new ThreadPoolExecutor(5,5, 120, TimeUnit.SECONDS, new ArrayBlockingQueue<Runnable>(8192), new TaskDiscardPolicy());
+    private static ExecutorService executor =new ThreadPoolExecutor(30,30, 120, TimeUnit.SECONDS, new ArrayBlockingQueue<Runnable>(8192), new TaskDiscardPolicy());
     
     public static TemplateConfig registTemplateConfig(String templatePath) throws IOException{
 		TemplateConfig templateConfig = TemplateXMLParser.parseTemplate(templatePath);
@@ -61,23 +65,37 @@ public class CommonCrawler {
     
     public static void publish(final TemplateConfig templateConfig) {
     	logger.info("publish a template,templateId={},scheduleInterval={} minutes",templateConfig.getTemplateId(),templateConfig.getScheduleInterval());
-    	scheduler.scheduleAtFixedRate(new Runnable(){
+    	if(templateConfig.getScheduleInterval()>0){
+    		scheduler.scheduleAtFixedRate(new Runnable(){
 
-			public void run() {
-				List<Request> requests = templateConfig.getSeedRequests();
-		    	for(Request request:requests){
-		    		try {
-						addRequest(request);
-					} catch (InvalidOperationException e) {			
-						e.printStackTrace();
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					}
-		    	}
-		    
-			}
-    		
-    	}, templateConfig.getInitDelay(), templateConfig.getScheduleInterval()*60, TimeUnit.SECONDS);
+    			public void run() {
+    				List<Request> requests = templateConfig.getSeedRequests();
+    		    	for(Request request:requests){
+    		    		try {
+    						addRequest(request);
+    					} catch (InvalidOperationException e) {			
+    						e.printStackTrace();
+    					} catch (InterruptedException e) {
+    						e.printStackTrace();
+    					}
+    		    	}
+    		    
+    			}
+        		
+        	}, templateConfig.getInitDelay(), templateConfig.getScheduleInterval()*60, TimeUnit.SECONDS);
+    	}else{
+    		List<Request> requests = templateConfig.getSeedRequests();
+	    	for(Request request:requests){
+	    		try {
+					addRequest(request);
+				} catch (InvalidOperationException e) {			
+					e.printStackTrace();
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+	    	}
+    	}
+    	
     	
     	
     	
@@ -97,8 +115,38 @@ public class CommonCrawler {
     
     
     static {
+    	printWorkingLog(1000);
     	executeTask();
     	processResult();  	   	  	
+    }
+    
+    public static void printWorkingLog(final long interval){
+    	new Thread(){
+
+			@Override
+			public void run() {
+				for(;;){
+					int queueSize=((ThreadPoolExecutor)executor).getQueue().size();
+					int activeThreadCount = ((ThreadPoolExecutor)executor).getActiveCount();
+					long completedTaskCount = ((ThreadPoolExecutor)executor).getCompletedTaskCount();
+					
+					logger.info("【ThreadPool statistics】queueSize:{},activeThreadCount:{},completedTaskCount{}",queueSize,activeThreadCount,completedTaskCount);
+					for(String templateId:runningPerTemplate.keySet()){
+						AtomicInteger runningThread = runningPerTemplate.get(templateId);
+						if(null!=runningThread){
+							logger.info("【{} activeThreadCount:{}】",templateId,runningThread);
+						}
+					}
+					try {
+						Thread.sleep(interval);
+					} catch (InterruptedException e) {
+						
+					}
+				}
+				
+			}
+    		
+    	}.start();
     }
     
     public static void executeTask(){
@@ -111,9 +159,22 @@ public class CommonCrawler {
 				for(;;){
 					Request request = requestQueue.poll();
 					if(null==request){
-						request = failureQueue.poll();											
+						request = failureQueue.poll();								
 					}
 					if(null!=request){
+						AtomicInteger runningThreadForTemplate = runningPerTemplate.get(request.getTemplateId());
+						if(null==runningThreadForTemplate){
+							runningThreadForTemplate = new AtomicInteger(0);
+						}
+						TemplateConfig templateConfig = ApplicationContext.getInstance().getTemplateConfigHolder().getTemplateConfig(request);
+						if(runningThreadForTemplate.get()>=templateConfig.getMaxThreadsPerNode()){
+							try {
+								requestQueue.put(request);
+							} catch (Exception e) {
+								
+							}
+							continue;
+						}
 						FutureTask<List<Map<String,Object>>> future = new FutureTask<List<Map<String,Object>>>(new RequestProcessor(request));   
 					    executor.execute(future);   
 					    try {
@@ -134,7 +195,7 @@ public class CommonCrawler {
 					}
 					
 					try {
-							Thread.sleep(1000);
+							Thread.sleep(200);
 						} catch (InterruptedException e) {			
 							logger.error(e.getMessage(),e);
 					   }
@@ -150,15 +211,14 @@ public class CommonCrawler {
 
 			@Override
 			public void run() {
-				int successed=0;
+				
 				for(;;){
 					FutureTask<List<Map<String,Object>>> future = futureQueue.poll();
 					if(null!=future){
 						try {
 							List<Map<String,Object>> result= future.get();
-							successed++;
-							int blocking=((ThreadPoolExecutor)executor).getQueue().size();;
-							 logger.info("successed:"+successed+",blocking:"+blocking);
+							processSuccessCount.getAndDecrement();
+							
 							if(null!=pipelineChain){
 								pipelineChain.process(result);
 							}
@@ -197,8 +257,30 @@ public class CommonCrawler {
 		public RequestProcessor(Request request){
 			this.request=request;
 		}
+		public void before(){
+			AtomicInteger runningCount = runningPerTemplate.get(request.getTemplateId());
+			if(null==runningCount){
+				synchronized(RequestProcessor.class){
+					if(null==runningCount){
+						runningCount = new AtomicInteger(0);
+						runningPerTemplate.put(request.getTemplateId(), runningCount);
+					}
+				}
+				
+			}
+			runningCount = runningPerTemplate.get(request.getTemplateId());
+			runningCount.incrementAndGet();
+			
+		}
+		
+		public void after(){
+			AtomicInteger runningCount = runningPerTemplate.get(request.getTemplateId());
+			runningCount.decrementAndGet();
+		}
 		public List<Map<String,Object>> call() {
-			try{		
+			
+			try{	
+				before();
 				String content=null;
 				try{
 					content = DownloaderRoute.getDownloader(request).download(request);
@@ -269,6 +351,8 @@ public class CommonCrawler {
 				
 			}catch(Exception e){
 				logger.error("failed to process request,url="+request.getUrl(),e);
+			}finally{
+				after();
 			}
 			
 			return null;

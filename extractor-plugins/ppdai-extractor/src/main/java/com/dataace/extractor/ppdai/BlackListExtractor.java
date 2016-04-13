@@ -46,7 +46,7 @@ public class BlackListExtractor implements Extractor<BlackName>{
 			String urlRegex = ".*(/blacklistdetail/\\w+)[^\\w].*";
 			Pattern pattern = Pattern.compile(urlRegex);
 			Matcher matcher = pattern.matcher(onclick);
-			logger.info("onclick:"+onclick);
+			//logger.info("onclick:"+onclick);
 			if(matcher.find()){
 				String url = matcher.group(1);
 				try {
@@ -61,7 +61,7 @@ public class BlackListExtractor implements Extractor<BlackName>{
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
-				logger.info("url:"+url);
+				//logger.info("url:"+url);
 			}
 			
 			

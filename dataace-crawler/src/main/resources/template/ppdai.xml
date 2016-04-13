@@ -11,6 +11,8 @@
     <maxDeep>30</maxDeep>
     <!-- 每隔多长时间跑一次，分钟 -->
     <scheduleInterval>300</scheduleInterval>
+    <!-- 每个节点最多使用多少个线程来跑这个template任务 -->
+    <maxThreadsPerNode>5</maxThreadsPerNode>
     
     <dataSource>PPDAI</dataSource>
     
@@ -64,7 +66,7 @@
 		<proxy>false</proxy>
 	</http>
 	<jarPaths>
-	        <jarPath>file:///C:\Users\pan\.m2\repository\org\dataace\ppdai-extractor\0.0.1-SNAPSHOT\ppdai-extractor-0.0.1-SNAPSHOT.jar</jarPath>
+	        <jarPath>file:///E:\repo\org\dataace\ppdai-extractor\0.0.1-SNAPSHOT\ppdai-extractor-0.0.1-SNAPSHOT.jar</jarPath>
 	 </jarPaths>
 	<processors>
 	

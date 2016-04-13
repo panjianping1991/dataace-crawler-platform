@@ -48,6 +48,7 @@ public class TemplateXMLParser {
         String dataSource = doc.select("template > dataSource").text().trim();
         String maxDeepStr = doc.select("template > maxDeep").text().trim();
         String scheduleIntervalStr = doc.select("template > scheduleInterval").text().trim();
+        String maxThreadsPerNodeStr = doc.select("template > maxThreadsPerNode").text().trim();
 
       
         TemplateConfig templateConfig = new TemplateConfig(templateId);
@@ -63,6 +64,9 @@ public class TemplateXMLParser {
         }
         if(null!=scheduleIntervalStr&&scheduleIntervalStr.matches("\\d+")){
         	templateConfig.setScheduleInterval(Integer.parseInt(scheduleIntervalStr));
+        }
+        if(null!=maxThreadsPerNodeStr&&maxThreadsPerNodeStr.matches("\\d+")){
+        	templateConfig.setMaxThreadsPerNode(Integer.parseInt(maxThreadsPerNodeStr));
         }
         in.close();
         return templateConfig;

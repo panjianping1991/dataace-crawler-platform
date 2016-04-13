@@ -53,24 +53,6 @@ img{
 
 
 
-<%-- <div ng-app="myApp" ng-controller="customersCtrl"> 
-
-<article  class="weui_article" ng-repeat="article in articles">
-    <h1>{{article.title}}</h1>
-    <section>
-        <!--<h2 class="title">章标题</h2>  -->
-        <section>
-            <h3>{{article.originalDataSource}}&nbsp;{{article.articleDisplayTimeStr}}</h3>
-            <p>{{ article.abst }}</p>
-        </section>
-    </section>
-</article>
-
-
-
-</div>--%>
-
-
   
 
 

@@ -12,6 +12,9 @@
     <!-- 每隔多长时间跑一次，分钟 -->
     <scheduleInterval>30</scheduleInterval>
     
+       <!-- 每个节点最多使用多少个线程来跑这个template任务 -->
+    <maxThreadsPerNode>5</maxThreadsPerNode>
+    
     <dataSource>TOUTIAO</dataSource>
     
 	<!--模板和种子地址，支持一个模板同时爬取多个种子的数据-->
