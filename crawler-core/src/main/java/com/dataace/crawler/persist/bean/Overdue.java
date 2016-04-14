@@ -14,7 +14,16 @@ public class Overdue {
 	private String termOfLoan;//借款期限
 	private String status;
 	private String remarks;
+	private Integer overdueCount;
 	
+	
+	
+	public Integer getOverdueCount() {
+		return overdueCount;
+	}
+	public void setOverdueCount(Integer overdueCount) {
+		this.overdueCount = overdueCount;
+	}
 	public String getOriginalUsername() {
 		return originalUsername;
 	}

@@ -23,25 +23,18 @@
 	       <url>http://www.p2p12580.com/blacklist_search.asp</url>
 	       <httpHeaders>
 	           <httpHeader>
-	                <key>Host</key>
-	                <value>www.p2p12580.com</value>
-	           </httpHeader>
-	           <httpHeader>
-	                <key>User-Agent</key>
-	                <value>Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.125 Safari/537.36</value>
-	           </httpHeader>
-	           <httpHeader>
-	                <key>Content-Type</key>
-	                <value>application/x-www-form-urlencoded</value>
+	                <key></key>
+	                <value></value>
 	           </httpHeader>
 	       </httpHeaders>
 	       <parameters>
 	           <parameter>
-	                <key></key>
-	                <value></value>
+	                <key>id</key>
+	                <value>0</value>
 	          </parameter>
 	       </parameters>
-	       <requestBody>txtKeyWord=&id=0&Submit=%CB%D1++%CB%F7</requestBody>
+	       <requestBody></requestBody>
+	       <responseEncode>gbk</responseEncode>
 	    </request>
 		
 	</seeds>

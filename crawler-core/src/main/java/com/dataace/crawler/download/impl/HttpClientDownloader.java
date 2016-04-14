@@ -2,6 +2,7 @@ package com.dataace.crawler.download.impl;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -16,6 +17,7 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpRequestBase;
 import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.entity.ByteArrayEntity;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
@@ -27,6 +29,7 @@ import com.dataace.crawler.download.DownloaderRoute;
 import com.dataace.crawler.download.HttpClientManager;
 import com.dataace.crawler.download.HttpMethod;
 import com.dataace.crawler.download.Request;
+import com.dataace.crawler.util.StringUtil;
 import com.dataace.crawler.util.URLUtil;
 
 
@@ -124,8 +127,8 @@ public class HttpClientDownloader implements Downloader{
 	 }
 	 
 	 private static void setRequestBody(HttpRequest request,Map<String,String> params,String body,String encode) throws UnsupportedEncodingException{
-		  if(null!=body){
-			  HttpEntity entity = new ByteArrayEntity(body.getBytes(encode)); 
+		  if(null!=body&&!StringUtil.isEmpty(body)){
+			  StringEntity entity = new StringEntity(body); 
 			  ((HttpPost)request).setEntity(entity);
 		  }else if(null!=params){
 	    	 List <NameValuePair> nvps = new ArrayList <NameValuePair>();
@@ -147,8 +150,15 @@ public class HttpClientDownloader implements Downloader{
 		
 		
 		
-		String url = "http://www.baidu.com";
-		String content=DownloaderRoute.getDownloader(new Request(url)).download(new Request(url));
+		String url = "http://www.p2p12580.com/blacklist_search.asp";
+		Request request = new Request(url);
+		request.setHttpMethod(HttpMethod.POST);
+		//request.setBody("txtKeyWord=&id=0");
+		Map<String,String> parameters = new HashMap<String,String>();
+		parameters.put("id", "0");
+		request.setParams(parameters);
+		request.setDecode("gbk");
+		String content=DownloaderRoute.getDownloader(request).download(request);
 		
 		System.out.println(content);
 			 

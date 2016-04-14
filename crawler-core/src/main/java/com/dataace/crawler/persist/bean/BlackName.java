@@ -12,9 +12,11 @@ public class BlackName {
 	private String idCard;
 	private String name;
 	private String qq;
+	private String email;
 	
 	private Gender gender;
 	private String mobile;
+	private String address;
 	
 	List<Overdue> overdues;
 	
@@ -27,6 +29,18 @@ public class BlackName {
 	}
 	
 	
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	public String getAddress() {
+		return address;
+	}
+	public void setAddress(String address) {
+		this.address = address;
+	}
 	public String getName() {
 		return name;
 	}
