@@ -8,34 +8,24 @@
         <title>DATAACE-创投热点</title>
         <!-- 引入 WeUI -->
         <link rel="stylesheet" href="/dataace-api/css/weui.css"/>
+         <link rel="stylesheet" href="/dataace-api/css/blacklist.css"/>
         <script src="http://apps.bdimg.com/libs/angular.js/1.4.6/angular.min.js"></script>
 <title>创投热点</title>
 
 
 </head>
-<body>
+<body ng-app="myApp" ng-controller="customersCtrl">
 
 
-<div class="weui_search_bar" id="search_bar">
-    <form class="weui_search_outer">
-        <div class="weui_search_inner">
-            <i class="weui_icon_search"></i>
-            <input type="search" class="weui_search_input" id="search_input" placeholder="搜索" required/>
-            <a href="javascript:" class="weui_icon_clear" id="search_clear"></a>
-        </div>
-        <label for="search_input" class="weui_search_text" id="search_text">
-            <i class="weui_icon_search"></i>
-            <span>搜索</span>
-        </label>
-    </form>
-    <a href="javascript:" class="weui_search_cancel" id="search_cancel">取消</a>
-</div>
+<form class="search" >
+	<input type="search" placeholder="请输入姓名/手机/身份证" name="search" ng-focus="getCurrFocus($event)" >
+</form>
 
 
 
 <div class="weui_panel">
     <div class="weui_panel_hd">信用黑名单</div>
-    <div class="weui_panel_bd" ng-app="myApp" ng-controller="customersCtrl">
+    <div class="weui_panel_bd" >
         <div class="weui_media_box weui_media_text" ng-repeat="blackname in blacknames">
            <div class="weui_media_box weui_media_text">
              <h4 class="weui_media_title">{{blackname.overdues[0].remarks}}</h4>
@@ -68,8 +58,14 @@ app.controller('customersCtrl', function($scope, $http) {
   $scope.more = function() {
 	      $scope.page = $scope.page+1;
 		  $http.get("list?page_no="+$scope.page).success(function (response) {$scope.blacknames=$scope.blacknames.concat(response.data);});
-	  
-  }
+	     
+  };
+  
+  $scope.getCurrFocus = function($event) {
+	   // $scope.currFocus = target.getAttribute('name');
+	   $event.target.setAttribute('placeholder','');
+	   
+	  };
 });
 </script>
 

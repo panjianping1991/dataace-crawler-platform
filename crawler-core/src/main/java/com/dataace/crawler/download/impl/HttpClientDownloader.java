@@ -153,10 +153,13 @@ public class HttpClientDownloader implements Downloader{
 		String url = "http://www.p2p12580.com/blacklist_search.asp";
 		Request request = new Request(url);
 		request.setHttpMethod(HttpMethod.POST);
-		//request.setBody("txtKeyWord=&id=0");
+		//request.setBody("id=0");
 		Map<String,String> parameters = new HashMap<String,String>();
 		parameters.put("id", "0");
 		request.setParams(parameters);
+		Map<String,String> headers = new HashMap<String,String>();
+		//headers.put("Content-Type","application/x-www-form-urlencoded; charset=GBK");
+		request.setHeaders(headers);
 		request.setDecode("gbk");
 		String content=DownloaderRoute.getDownloader(request).download(request);
 		
