@@ -79,6 +79,8 @@ private final Logger logger = LoggerFactory.getLogger(CompanyController.class);
 		logger.info("currentRequestUrl:"+currentRequestUrl);
 		String dataSource  = parameterMap.get("data_source");
  		String pageNoStr =parameterMap.get("page_no");
+ 		String keywords = parameterMap.get("keywords");
+ 	
  		
  		int  pageSize = 20;
 		int pageNo=1;
@@ -91,7 +93,17 @@ private final Logger logger = LoggerFactory.getLogger(CompanyController.class);
 		}
 		Map<String, Object> criterias = new HashMap<String,Object>();
 		criterias.put("dataSource", dataSource);
-	
+		if(null!=keywords){
+			keywords = keywords.trim();
+			  if(keywords.matches("\\d{11}")){
+			    	criterias.put("mobile",keywords);
+		 		}else if(keywords.matches("\\d{17}(\\d|X)")){
+			    	criterias.put("idCard",keywords);
+		 		}else if(keywords.matches("\\S{2,4}")){
+			    	criterias.put("name",keywords);
+		 		}
+		}
+	  
 		
 		long totalRecords = blackNameService.count(criterias);
 		//long maxPageNo = totalRecords%pageSize==0?totalRecords/pageSize:totalRecords/pageSize+1;

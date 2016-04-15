@@ -1,8 +1,24 @@
+span.field{
+	display:inline-block;
+	width:200px;
+}
+.search_box{
+	margin:80px auto;
+	width:350px;
+}
+h1{
+    width:300px;
+    margin:5px auto;
+ font-family: Helvetica, 'Hiragino Sans GB', 'Microsoft Yahei', '微软雅黑', Arial, sans-serif;
+
+
+
+	font-size:20px;
+}
 form.search{
 	
-	padding:50px 0 0 50px;
+	/*padding:10px 0 0 50px;*/
 }
-
 input[type="search"]:focus {
     background-color: #fff;
     border-color: #6dcff6;

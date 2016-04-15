@@ -1,6 +1,8 @@
 package com.dataace.api.service.impl;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 
@@ -46,6 +48,7 @@ private final Logger logger = LoggerFactory.getLogger(BlackNameService.class);
 			 }
 			 query.addCriteria(Criteria.where(name).is(criterias.get(name)));
 		 }	 
+		query.with(new Sort(Direction.DESC, "updateTime"));
 		query.limit(pageSize);
 		
 		query.skip(pageSize*(pageNo-1)<0?0:pageSize*(pageNo-1));
@@ -101,7 +104,7 @@ private final Logger logger = LoggerFactory.getLogger(BlackNameService.class);
 		String mobile = dbObject.get("mobile").toString();
 		String name = dbObject.get("name").toString();
 		String gender = dbObject.get("gendar")==null?null:dbObject.get("gendar").toString();
-		
+		String email = dbObject.get("email")==null?null:dbObject.get("email").toString();
 		
 		String overdues = dbObject.get("overdues")==null?null:dbObject.get("overdues").toString();
 		if(null!=overdues){
@@ -109,10 +112,17 @@ private final Logger logger = LoggerFactory.getLogger(BlackNameService.class);
 			Gson gson = new Gson();
 			blackName.setOverdues((List<Overdue>)gson.fromJson(overdues, new TypeToken<List<Overdue>>(){}.getType()));			
 		}
+		long updateTime = Long.parseLong(dbObject.get("updateTime").toString());
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		Calendar c = Calendar.getInstance();
+		c.setTimeInMillis(updateTime);
+		blackName.setUpdateTime(format.format(c.getTime()));
+		
 		blackName.setId(id);
 		blackName.setIdCard(idCard);
 		blackName.setMobile(mobile);
 		blackName.setName(name);
+		blackName.setEmail(email);
 		if(null!=gender){
 			blackName.setGender(Gender.valueOf(gender));
 		}
