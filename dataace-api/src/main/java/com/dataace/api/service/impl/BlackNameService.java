@@ -113,7 +113,7 @@ private final Logger logger = LoggerFactory.getLogger(BlackNameService.class);
 			blackName.setOverdues((List<Overdue>)gson.fromJson(overdues, new TypeToken<List<Overdue>>(){}.getType()));			
 		}
 		long updateTime = Long.parseLong(dbObject.get("updateTime").toString());
-		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 		Calendar c = Calendar.getInstance();
 		c.setTimeInMillis(updateTime);
 		blackName.setUpdateTime(format.format(c.getTime()));
