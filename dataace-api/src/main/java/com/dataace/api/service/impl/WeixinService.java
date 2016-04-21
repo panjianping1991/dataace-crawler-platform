@@ -24,9 +24,9 @@ public class WeixinService implements IWeixinService{
 
 	@Override
 	public void createMenu() throws Exception {
-		IWeixinButton ctrdButton = new ViewButton("征信查询","http://120.25.213.61/dataace-api/blacklist/weixin");
-		IWeixinButton gstsButton = new ViewButton("征信录入","http://120.25.213.61/dataace-api/company/weixin");
-		IWeixinButton hyfxButton = new ViewButton("行业分析","http://120.25.213.61/dataace-api/industry/weixin");
+		IWeixinButton ctrdButton = new ViewButton("征信查询","http://www.dataace.cn/dataace-api/blacklist/weixin");
+		IWeixinButton gstsButton = new ViewButton("征信录入","http://www.dataace.cn/dataace-api/company/weixin");
+		IWeixinButton hyfxButton = new ViewButton("行业分析","http://www.dataace.cn/dataace-api/industry/weixin");
 		
 		WeixinMenu weixinMenu = new WeixinMenu();
 		List<IWeixinButton> buttons = new ArrayList<IWeixinButton>(); 
@@ -40,7 +40,7 @@ public class WeixinService implements IWeixinService{
 		Request request = new Request(Constants.CREATE_MENU_URL+accessToken);
 		request.setHttpMethod(HttpMethod.POST);
 		request.setBody(menuJson.toString());
-		
+		logger.info("menuJson:"+menuJson);
 		Downloader downloader = new HttpClientDownloader();
 		String response = downloader.download(request);
 		logger.info("response:{}"+response);
