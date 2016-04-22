@@ -11,5 +11,5 @@ when we need to crawler a new website, we just need to do the following step:
  2、publish the task which descriped by a template file to the web crawler framework, for detail, you can refer to the samples in
  "dataace-crawler-platform/dataace-crawler/src/test/java/com/dataace/crawler/" folder
  
- if you have any question, please feel free to contact me by email panjianping1991@163.com.
+ if you have any questions, please feel free to contact me by email panjianping1991@163.com.
 
