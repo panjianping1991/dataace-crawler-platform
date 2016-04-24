@@ -141,8 +141,8 @@ public class HttpClientDownloader implements Downloader{
 	 
 	 private static void setRequestBody(HttpRequest request,Map<String,String> params,String body,String encode) throws UnsupportedEncodingException{
 		  if(null!=body&&!StringUtil.isEmpty(body)){
-			  StringEntity entity = new StringEntity(body); 
-			  ((HttpPost)request).setEntity(entity);
+			 // StringEntity entity = new StringEntity(body); 
+			  ((HttpPost)request).setEntity(new ByteArrayEntity(body.getBytes(encode)));
 		  }else if(null!=params){
 	    	 List <NameValuePair> nvps = new ArrayList <NameValuePair>();
 	       	for(String paramName:params.keySet()){
