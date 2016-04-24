@@ -19,6 +19,7 @@ public class BlackName {
 	private String address;
 	
 	private String updateTime;
+	private Uploader uploader;
 	
 	List<Overdue> overdues;
 	
@@ -86,5 +87,13 @@ public class BlackName {
 	public void setOverdues(List<Overdue> overdues) {
 		this.overdues = overdues;
 	}
+	public Uploader getUploader() {
+		return uploader;
+	}
+	public void setUploader(Uploader uploader) {
+		this.uploader = uploader;
+	}
+	
+	
 	
 }

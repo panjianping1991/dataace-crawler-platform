@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<template>
+    <!--模板id，创建时由程序自动生成-->
+    <id>renren</id>
+    <!--模板名称-->
+    <name>人人网</name>
+    <!--模板描述-->
+    <description>模板描述</description>
+   	<!-- 深度 -->
+    <maxDeep>30</maxDeep>
+    <!-- 每隔多长时间跑一次，分钟 -->
+    <scheduleInterval>300</scheduleInterval>
+    <!-- 每个节点最多使用多少个线程来跑这个template任务 -->
+    <maxThreadsPerNode>1</maxThreadsPerNode>
+    
+    <dataSource>RENREN</dataSource>
+    
+	<!--模板和种子地址，支持一个模板同时爬取多个种子的数据-->
+	<seeds>
+	    <request>
+	       <httpMethod>POST</httpMethod>
+	       <url>http://browse.renren.com/sAjax.do?ref_search=&q=%E6%AD%A6%E6%B1%89%E7%A7%91%E6%8A%80%E5%A4%A7%E5%AD%A6&p=%5B%7B%22t%22%3A%22univ%22%2C%22name%22%3A%22%E6%AD%A6%E6%B1%89%E7%A7%91%E5%A4%A7%22%2C%22id%22%3A%2211022%22%2C%22year%22%3A%222008%22%7D%5D&s=0&u=895539910&act=search&offset=0&sort=0</url>
+	       <httpHeaders>
+	           <httpHeader>
+	                <key>Cookie</key>
+	                <value>anonymid=in2xuirbj617f8; depovince=GW; _r01_=1; JSESSIONID=abcAP8xB5gBqv9Ek7yEqv; __utma=151146938.1501138792.1460799258.1460799258.1460799258.1; __utmc=151146938; __utmz=151146938.1460799258.1.1.utmcsr=renren.com|utmccn=(referral)|utmcmd=referral|utmcct=/; ick=f177ea2f-6eca-4443-b6d4-51ec476dd8f8; newbie=1; XNESSESSIONID=2b2a56dbe3df; jebecookies=10f53939-d90c-43d2-82fe-33401080c92a|||||; ick_login=ec947f5e-3a6a-4a6c-b194-983ee1459175; _de=289A5642400344B681505879CD9109B25BF7EAB63017E04A; p=726cbfac620bb1fce10b412900b3093f0; first_login_flag=1; ln_uact=panjianping1991@163.com; ln_hurl=http://head.xiaonei.com/photos/0/0/men_main.gif; t=0313f281c7b9567934095621f9df1f0a0; societyguester=0313f281c7b9567934095621f9df1f0a0; id=895539910; xnsid=e18bcb22; jebe_key=43baf334-7e25-445a-9aa2-fd59e45a1b0b%7C9981c97c8f79c1d483912a04f81f37f1%7C1460799971352%7C1%7C1460800464652; ver=7.0; loginfrom=null; wp=0; wp_fold=0</value>
+	           </httpHeader>
+	       </httpHeaders>
+	       <parameters>
+	           <parameter>
+	                <key></key>
+	                <value>ajax=1&q=&p=[{"id":"11022","t":"univ","name":"武汉科大","year":"2008"}]&s=0&u=895539910&act=search&offset=0&ss=false&requestToken=-1220290957&_rtk=8304d4cd</value>
+	          </parameter>
+	       </parameters>
+	       <requestBody></requestBody>
+	       <responseEncode>utf-8</responseEncode>
+	    </request>
+		
+	</seeds>
+
+	<!--爬取两个页面的间隔时间，用于控制爬取网页的频度-->
+	<pageSleepTime>2000</pageSleepTime>
+	<messageQueue>
+		<!--创建包含等爬取URL的MQ消息时，每次所携带的URL数据量-->
+		<urlSize>50</urlSize>
+		<!--创建包含已抽取数据的MQ消息时，每次所携带的数据量-->
+		<dataSize>50</dataSize>
+	</messageQueue>
+	
+	<http>
+		<cookie></cookie>
+		<userAgent>Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.71 Safari/537.36</userAgent>
+		<!--连接超时时间-->
+		<connectionTimeout>5000</connectionTimeout>
+		<!--请求超时时间-->
+		<soTimeout>10000</soTimeout>
+		<encoding>utf-8</encoding>
+		<!-- 下载异常时马上重新尝试的次数（不会将url添加到队列） -->
+		<retryTimes>3</retryTimes>
+		<!-- 下载异常失败之后，重试的次数（将url重新添加队列中） -->
+		<cycleRetryTimes>8</cycleRetryTimes>
+		<contentType>text/xml; charset=utf-8</contentType>
+		<proxy>false</proxy>
+	</http>
+	<jarPaths>
+	        <jarPath>file:///C:\Users\pan\.m2\repository\org\dataace\renren-extractor\0.0.1-SNAPSHOT\renren-extractor-0.0.1-SNAPSHOT.jar</jarPath>
+	 </jarPaths>
+	<processors>
+	
+		<processor type="java">
+			<regexs>
+				<urlRegs>
+					<urlReg>http://browse.renren.com/sAjax.do.*</urlReg>
+					
+				</urlRegs>
+			</regexs>
+			<page>
+				<props>
+					<prop key="encoding">utf-8</prop><!-- 页面级别的参数，在downloader页面的时候会用到 -->
+					<prop key="recrawl">604800000</prop><!-- 该url重爬的时间间隔限制 -->					
+				</props>
+			</page>
+			<target>
+				<class>com.dataace.extractor.renren.BlackListExtractor</class>
+				<props>
+				</props>
+			</target>
+		</processor>
+		
+		<processor type="java">
+			<regexs>
+				<urlRegs>
+					<urlReg>http://www.renren.com/\d+/profile\?v=info_timeline </urlReg>
+					
+				</urlRegs>
+			</regexs>
+			<page>
+				<props>
+					<prop key="encoding">utf-8</prop><!-- 页面级别的参数，在downloader页面的时候会用到 -->
+					<prop key="recrawl">604800000</prop><!-- 该url重爬的时间间隔限制 -->					
+				</props>
+			</page>
+			<target>
+				<class>com.dataace.extractor.renren.BlackDetailExtractor</class>
+				<props>
+				</props>
+			</target>
+		</processor>
+		
+		
+		
+		
+	</processors>
+</template>

@@ -24,6 +24,7 @@ import com.dataace.crawler.persist.MongoCollection;
 import com.dataace.crawler.persist.bean.BlackName;
 import com.dataace.crawler.persist.bean.Gender;
 import com.dataace.crawler.persist.bean.Overdue;
+import com.dataace.crawler.util.CollectionUtil;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.mongodb.DBObject;
@@ -36,6 +37,15 @@ private final Logger logger = LoggerFactory.getLogger(BlackNameService.class);
 	
     @Resource
     private MongoTemplate mongoTemplate;
+    
+    
+    public void save(BlackName blackName){
+    	Map<String,Object> model = CollectionUtil.toMap(blackName);
+    	long now = Calendar.getInstance().getTimeInMillis();
+    	model.put("createTime", now);
+    	model.put("updateTime", now);
+    	mongoTemplate.save(model, MongoCollection.BLACKNAME.getName());
+    }
 
 	@Override
 	public List<BlackName> list(Map<String, Object> criterias, int pageSize,

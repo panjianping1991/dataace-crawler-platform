@@ -16,6 +16,7 @@ import com.dataace.api.service.IWeixinService;
 import com.dataace.crawler.download.Downloader;
 import com.dataace.crawler.download.HttpMethod;
 import com.dataace.crawler.download.Request;
+import com.dataace.crawler.download.Response;
 import com.dataace.crawler.download.impl.HttpClientDownloader;
 
 public class WeixinService implements IWeixinService{
@@ -42,8 +43,8 @@ public class WeixinService implements IWeixinService{
 		request.setBody(menuJson.toString());
 		
 		Downloader downloader = new HttpClientDownloader();
-		String response = downloader.download(request);
-		logger.info("response:{}"+response);
+		Response response = downloader.download(request);
+		logger.info("response:{}"+response.getBody());
 		
 	}
 
@@ -58,8 +59,8 @@ public class WeixinService implements IWeixinService{
 		Downloader downloader = new HttpClientDownloader();
 		Request request = new Request(Constants.GET_ACCESS_TOKEN_URL);
 		String token=null;
-		String content = downloader.download(request);
-		token = new JSONObject(content).getString("access_token");
+		Response content = downloader.download(request);
+		token = new JSONObject(content.getBody()).getString("access_token");
 		return token;
 		
 	}
@@ -77,9 +78,9 @@ public class WeixinService implements IWeixinService{
 		request.setHttpMethod(HttpMethod.GET);
 		
 		Downloader downloader = new HttpClientDownloader();
-		String response = downloader.download(request);
+		Response response = downloader.download(request);
 		logger.info("response:{}"+response);
-		JSONObject responseJson=new JSONObject(response);
+		JSONObject responseJson=new JSONObject(response.getBody());
 		String status=responseJson.get("errcode").toString();
 		logger.info("status:"+status);
 		if("0".equals(status)){

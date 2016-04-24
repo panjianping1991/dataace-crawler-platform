@@ -23,6 +23,7 @@ import org.apache.logging.log4j.Logger;
 import com.dataace.crawler.annotation.MongoBean;
 import com.dataace.crawler.download.DownloaderRoute;
 import com.dataace.crawler.download.Request;
+import com.dataace.crawler.download.Response;
 import com.dataace.crawler.exception.InvalidOperationException;
 import com.dataace.crawler.extractor.Extractor;
 import com.dataace.crawler.extractor.ExtractorRoute;
@@ -35,6 +36,7 @@ import com.dataace.crawler.template.TemplateConfig;
 import com.dataace.crawler.template.TemplateXMLParser;
 import com.dataace.crawler.util.CollectionUtil;
 import com.dataace.crawler.util.Params;
+import com.dataace.crawler.util.StringUtil;
 
 
 
@@ -282,8 +284,12 @@ public class CommonCrawler {
 			try{	
 				before();
 				String content=null;
+				Response response = null;
 				try{
-					content = DownloaderRoute.getDownloader(request).download(request);
+					response = DownloaderRoute.getDownloader(request).download(request);
+					if(null!=response){
+						content = response.getBody();
+					}
 				}catch(Throwable e){
 					logger.warn(e.getMessage());
 				}				
@@ -321,6 +327,22 @@ public class CommonCrawler {
 							 
 							splitRequest.setExtras(extras);
 							splitRequest.setTemplateId(request.getTemplateId());
+							Map<String,String> headers = splitRequest.getHeaders();
+							if(!(null!=headers&&!StringUtil.isEmpty(headers.get("Cookie")))){
+								String responseCookie = response.getHeaders()==null?null:response.getHeaders().get("Cookie");
+								String parentCookie =request.getHeaders()==null?null:request.getHeaders().get("Cookie");
+								if(responseCookie==null){
+									responseCookie=parentCookie;
+								}
+								if(null!=responseCookie){
+								   if(null==headers){
+									   headers = new HashMap<String,String>();
+									   splitRequest.setHeaders(headers);
+								   }
+								   headers.put("Cookie", responseCookie);
+								   logger.info("set Cookie:{}",responseCookie);
+								}
+							}
 							addRequest(splitRequest);
 							
 						}
