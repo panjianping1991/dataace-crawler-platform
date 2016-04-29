@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.http.Header;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpRequest;
 import org.apache.http.NameValuePair;
@@ -29,6 +30,7 @@ import com.dataace.crawler.download.DownloaderRoute;
 import com.dataace.crawler.download.HttpClientManager;
 import com.dataace.crawler.download.HttpMethod;
 import com.dataace.crawler.download.Request;
+import com.dataace.crawler.download.Response;
 import com.dataace.crawler.util.StringUtil;
 import com.dataace.crawler.util.URLUtil;
 
@@ -37,7 +39,7 @@ public class HttpClientDownloader implements Downloader{
 	
 	private static final Logger logger =  LogManager.getLogger(HttpClientManager.class);
 	
-	public  String download(Request request) throws Exception{
+	public  Response download(Request request) throws Exception{
 		
 		logger.info("【Request】:{}",request);
 		HttpRequestBase httpRequest = null;
@@ -54,7 +56,7 @@ public class HttpClientDownloader implements Downloader{
 	}
 	
 		
-	public static String download(HttpRequestBase httpRequest,String encode) throws Exception{
+	public static Response download(HttpRequestBase httpRequest,String encode) throws Exception{
 	
 		
          String content=null;
@@ -89,10 +91,21 @@ public class HttpClientDownloader implements Downloader{
 			 }else{
 				 //String contentType = response.getFirstHeader("Content-Type").toString();
 				 //logger.debug("contentType:"+contentType);
-				 
+				     Response resp = new Response();
+				     Map<String,String> responseHeaders = new HashMap<String,String>();
+				     resp.setHeaders(responseHeaders);
 					 try{
+						 Header[] headers =response.getAllHeaders(); 
+						 if(null!=headers){
+							 for(Header header:headers){
+								 responseHeaders.put(header.getName(), header.getValue());
+							 }
+						 }
+						
 						 HttpEntity entity = response.getEntity();						 
-						 content = EntityUtils.toString(entity,encode);						 						 
+						 content = EntityUtils.toString(entity,encode);		
+						 resp.setBody(content);
+						 return resp;
 					 }catch(Exception e){
 						 throw new Exception("unable to download url:"+httpRequest.getURI().getPath(),e);
 					 }finally{
@@ -107,7 +120,7 @@ public class HttpClientDownloader implements Downloader{
 				 response.close();
 			 }
 		 }
-		 return content;
+		 return null;
 		 
 	}
 	
@@ -128,8 +141,8 @@ public class HttpClientDownloader implements Downloader{
 	 
 	 private static void setRequestBody(HttpRequest request,Map<String,String> params,String body,String encode) throws UnsupportedEncodingException{
 		  if(null!=body&&!StringUtil.isEmpty(body)){
-			  StringEntity entity = new StringEntity(body); 
-			  ((HttpPost)request).setEntity(entity);
+			 // StringEntity entity = new StringEntity(body); 
+			  ((HttpPost)request).setEntity(new ByteArrayEntity(body.getBytes(encode)));
 		  }else if(null!=params){
 	    	 List <NameValuePair> nvps = new ArrayList <NameValuePair>();
 	       	for(String paramName:params.keySet()){
@@ -161,9 +174,9 @@ public class HttpClientDownloader implements Downloader{
 		//headers.put("Content-Type","application/x-www-form-urlencoded; charset=GBK");
 		request.setHeaders(headers);
 		request.setDecode("gbk");
-		String content=DownloaderRoute.getDownloader(request).download(request);
+		Response response=DownloaderRoute.getDownloader(request).download(request);
 		
-		System.out.println(content);
+		System.out.println(response.getBody());
 			 
 	}
 

@@ -1,9 +1,19 @@
+
+body {
+    color: #333333;
+    font-family: arial,'Lantinghei SC',Helvetica,'Microsoft Yahei',sans-serif;
+    font-size: 14px;
+}
+
 span.field{
 	display:inline-block;
 	width:190px;
 }
+.find_dis_top {
+    background-color: #18B4ED;
+    padding-bottom:50px;
+}
 .search_box{
-	
     margin: 0 auto;
     max-width: 600px;
     padding: 15px;
@@ -20,16 +30,101 @@ span.field{
 }
 .main{
 	margin: 0 auto;
-    max-width: 1000px;
-    padding: 20px 15px 15px 15px;
+   
 }
+
+.find_dis_list.current {
+    display: block;
+    padding: 12px;
+}
+
+.find_dis_item {
+    background-color: #FFFFFF;
+    border: 1px solid #DADADA;
+    color: #4B4B4B;
+    display: block;
+    line-height: 29px;
+    margin-bottom: 10px;
+    padding: 8px 16px 8px 14px;
+    position: relative;
+    text-align: left;
+}
+
+.find_dis_title {
+    font-size: 15px;
+    vertical-align: top;
+    width: 100%;
+}
+.find_dis_value {
+    margin-top: 5px;
+    vertical-align: top;
+}
+.find_dis_value.num {
+    background-attachment: scroll;
+    background-clip: border-box;
+    background-color: transparent;
+    background-image: url("../images/number_icon.png");
+    background-origin: padding-box;
+    background-position: left 7px;
+    background-repeat: no-repeat;
+    background-size: 16px auto;
+    width: 55%;
+}
+.find_dishonest .icon_gt {
+    border-width: 3px 3px 0 0;
+    height: 9px;
+    width: 9px;
+}
+
+.icon_gt {
+    border-color: #777777;
+    border-style: solid;
+    border-width: 2px 2px 0 0;
+    height: 8px;
+    margin-top: -5px;
+    position: absolute;
+    right: 6px;
+    top: 50%;
+    width: 8px;
+}
+
+.find_dis_value {
+    margin-top: 5px;
+    vertical-align: top;
+}
+
+.ib > * {
+    display: inline-block;
+    font-size: 14px;
+    letter-spacing: 0;
+}
+.find_dis_text {
+    font-size: 12px;
+    padding-left: 17px;
+}
+
+.find_dis_value.mobile {
+    background-attachment: scroll;
+    background-clip: border-box;
+    background-color: transparent;
+    background-image: url("../images/phone.png");
+    background-origin: padding-box;
+    background-position: left 9px;
+    background-repeat: no-repeat;
+    background-size: 12px auto;
+    width: 40%;
+}
+
 .header h1{
 	margin: 0 auto;
     max-width: 300px;
+    color: #FFFFFF;
+    text-align:center;
+    font-size:26px;
 }
 
 .header{
-	padding-top:60px;
+	padding-top:20px;
        margin: 0 auto;
     max-width: 600px;
  font-family: Helvetica, 'Hiragino Sans GB', 'Microsoft Yahei', '微软雅黑', Arial, sans-serif;

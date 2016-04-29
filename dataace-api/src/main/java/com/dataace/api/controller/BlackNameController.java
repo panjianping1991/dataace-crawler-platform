@@ -1,19 +1,25 @@
 package com.dataace.api.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.annotation.Resource;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -25,6 +31,8 @@ import com.dataace.api.bean.Response;
 import com.dataace.api.service.IBlackNameService;
 import com.dataace.api.util.StringUtils;
 import com.dataace.crawler.persist.bean.BlackName;
+import com.dataace.crawler.persist.bean.Overdue;
+import com.dataace.crawler.persist.bean.Uploader;
 
 @Controller
 @RequestMapping(value = "/blacklist")
@@ -127,5 +135,70 @@ private final Logger logger = LoggerFactory.getLogger(CompanyController.class);
 		      model.addAttribute("host", appConfig.getHost());
 		      return "blacklist";
      }
+	 
+	 @RequestMapping(value="/details/weixin/{id}",method = RequestMethod.GET)
+		public String getDetailById(@PathVariable String id,Model model,HttpServletRequest request) {
+			model.addAttribute("id", id);
+			return "credit_detail";
+	    	
+	    }
 	
+	 @RequestMapping(value="/weixin/submit",method = RequestMethod.GET)
+		public String submit(Model model,HttpServletRequest request) {
+			return "submit_black";
+	    	
+	    }
+	 
+	 @RequestMapping(value="/weixin/add",method = RequestMethod.POST)
+		public String add(@RequestBody Map<String,String> requestMap, HttpServletResponse response) {
+		 
+		    String loanDate = requestMap.get("loanDate");
+		    String overdueMoney = requestMap.get("overdueMoney");
+		    String overdueDays = requestMap.get("overdueDays");
+		    String remarks = requestMap.get("remarks");
+		    String userName = requestMap.get("userName");
+		    String idCard = requestMap.get("idCard");
+		    String mobile = requestMap.get("mobile");
+		    String loanPlatform = requestMap.get("loanPlatform");
+		    String uploaderName = requestMap.get("uploaderName");
+		    String uploaderMobile = requestMap.get("uploaderMobile");
+		    String uploaderEmail = requestMap.get("uploaderEmail");
+		    
+		    Uploader uploader = new Uploader();
+		    
+		    uploader.setName(uploaderName);
+		    uploader.setMobile(uploaderMobile);
+		    uploader.setEmail(uploaderEmail);
+		    
+		    BlackName blackName = new BlackName();
+		    blackName.setUploader(uploader);
+		
+			List<Overdue> overdues= new ArrayList<Overdue>();
+			blackName.setOverdues(overdues);
+			
+	
+			Overdue overdue = new Overdue();
+			overdue.setLoanPlatform(loanPlatform);
+
+			overdue.setLoanDate(loanDate);
+			if(null!=overdueMoney&&overdueMoney.matches("\\d+(\\.\\d+)")){
+				overdue.setOverdueMoney(Double.parseDouble(overdueMoney));
+			}
+			if(null!=overdueDays&&overdueDays.matches("\\d+(\\.\\d+)")){
+				overdue.setOverdueDays(Integer.parseInt(overdueDays));
+			}
+			
+			overdue.setRemarks(remarks);
+			overdues.add(overdue);	
+				
+			
+			blackName.setMobile(mobile);
+			blackName.setIdCard(idCard);
+			blackName.setName(userName);		
+			blackNameService.save(blackName);
+			
+			
+			return "submit_black";
+	    	
+	    }
 }

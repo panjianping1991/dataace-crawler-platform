@@ -6,7 +6,7 @@ import org.apache.logging.log4j.Logger;
 import com.dataace.crawler.pipeline.impl.MongoPipeline;
 import com.dataace.crawler.template.TemplateConfig;
 
-public class P2p12580Crawler {
+public class RenRenCrawler {
 	
 private static final Logger logger =  LogManager.getLogger(ToutiaoCrawler.class);
 	
