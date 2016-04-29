@@ -33,11 +33,11 @@
   	<module>toutiao-extractor</module>
   	<module>ppdai-extractor</module>
   	<module>p2p12580-extractor</module>
-<<<<<<< HEAD
+
   	<module>insking-test</module>
   	<module>thebetterchinese-extractor</module>
-=======
+
   	<module>renren-extractor</module>
->>>>>>> 035c8fee9792525a4253f5e149f0cb69f1df75ae
+
   </modules>
 </project>
