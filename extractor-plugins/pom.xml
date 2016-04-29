@@ -33,5 +33,7 @@
   	<module>toutiao-extractor</module>
   	<module>ppdai-extractor</module>
   	<module>p2p12580-extractor</module>
+  	<module>insking-test</module>
+  	<module>thebetterchinese-extractor</module>
   </modules>
 </project>

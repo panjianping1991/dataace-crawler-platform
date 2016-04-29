@@ -60,7 +60,7 @@ input[type="search"] {
 }
 
 .btn-search{
-	  background: #ededed url("../images/search-icon.png") no-repeat scroll 9px center;
+	background: #ededed url("../images/search-icon.png") no-repeat scroll 9px center;
 	background-color: #FFFFFF;
     border: medium none;
     color: #8A8A8A;
