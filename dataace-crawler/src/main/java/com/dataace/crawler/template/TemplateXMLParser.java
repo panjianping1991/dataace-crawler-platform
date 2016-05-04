@@ -107,7 +107,7 @@ public class TemplateXMLParser {
     		String method = ele.select("httpMethod").text().trim();
     		String requestBody = ele.select("requestBody").text().trim();
     		String responseEncode = "utf-8";
-    		if(null!=ele.select("responseEncode")){
+    		if(null!=ele.select("responseEncode")&&!StringUtil.isEmpty(ele.select("responseEncode").text())){
     			responseEncode = ele.select("responseEncode").text().trim();
     		}
     		Map<String,String> headers = new HashMap<String,String>();

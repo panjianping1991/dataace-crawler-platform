@@ -24,7 +24,7 @@
 	       <httpHeaders>
 	           <httpHeader>
 	                <key>Host</key>
-	                <value>http://www.thebetterchinese.com</value>
+	                <value>www.thebetterchinese.com</value>
 	           </httpHeader>
 	           <httpHeader>
 	                <key>User-Agent</key>
@@ -73,7 +73,7 @@
 		<processor type="java">
 			<regexs>
 				<urlRegs>
-					<urlReg>http://www.thebetterchinese.com/Blacklist/Lai.mvc?laiId=\\d+</urlReg>
+					<urlReg>http://www.thebetterchinese.com/Blacklist/Lai.mvc</urlReg>
 					
 				</urlRegs>
 			</regexs>
@@ -84,7 +84,7 @@
 				</props>
 			</page>
 			<target>
-				<class>com.dataace.extractor.thebetterchinese.thebetterchinese</class>
+				<class>org.thebetterchinese.extractor.Thebetterchinese</class>
 				<props>
 				</props>
 			</target>
@@ -93,7 +93,7 @@
 		<processor type="java">
 			<regexs>
 				<urlRegs>
-					<urlReg>http://www.thebetterchinese.com/Blacklist/Laidetails.mvc?laiId=\d</urlReg>
+					<urlReg>http://www.thebetterchinese.com/Blacklist/Laidetails.mvc\?laiId=\d+</urlReg>
 				</urlRegs>
 			</regexs>
 			<page>
@@ -103,7 +103,7 @@
 				</props>
 			</page>
 			<target>
-				<class>com.dataace.extractor.thebetterchinese.thebetterchineseDetial</class>
+				<class>org.thebetterchinese.extractor.Thebetterchinese</class>
 				<props>
 				</props>
 			</target>
