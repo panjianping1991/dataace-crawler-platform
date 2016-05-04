@@ -43,7 +43,7 @@ public class ThebetterchineseDetail implements Extractor<BlackName> {
 		BlackName blackName = new BlackName();
 		blackName.setId(userId);
 		List<Overdue> overdues= new ArrayList<Overdue>();
-		blackName.setOverdues(overdues);
+		               blackName.setOverdues(overdues);
 	//	String remarks = doc.select(".info_tit >span").first().text();
 		for(int i=1;i<eles.size();i++){
 			Element ele = eles.get(i);

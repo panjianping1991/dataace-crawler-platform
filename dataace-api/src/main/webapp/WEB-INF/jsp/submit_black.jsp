@@ -42,7 +42,7 @@
     </fieldset>
 
  <fieldset class="pure-group">
-        <input type="text" class="pure-input-1-2" ng-model="user.loanDate"  placeholder="借款时间">
+         <input type="text" class="pure-input-1-2" ng-model="user.loanDate"  placeholder="借款时间">
          <input type="text" class="pure-input-1-2" ng-model="user.overdueDays"  placeholder="逾期天数">
          <input type="text" class="pure-input-1-2" ng-model="user.overdueMoney"  placeholder="逾期本息">
          <input type="text" class="pure-input-1-2" ng-model="user.loanPlatform"  placeholder="放贷平台">

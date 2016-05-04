@@ -83,9 +83,9 @@ public class Thebetterchinese implements Extractor<BlackName> {
 			if(matcher.find()){
 				int totalPage = Integer.parseInt(matcher.group(1));
 				for(int i=2;i<=totalPage;i++){
-					String listUrl = "http://www.thebetterchinese.com/Blacklist/Lai.mvc?pageNo="+i+"&pageSize=10";
+					 String listUrl = "http://www.thebetterchinese.com/Blacklist/Lai.mvc?pageNo="+i+"&pageSize=10";
 					Request request = new Request(listUrl);
-					Map<String,String> headers = new HashMap<String,String>();
+				        	Map<String,String> headers = new HashMap<String,String>();
 					headers.put("Host", "http://www.thebetterchinese.com/");
 					headers.put("User-Agent", "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.71 Safari/537.36");
 					request.setHeaders(headers);
