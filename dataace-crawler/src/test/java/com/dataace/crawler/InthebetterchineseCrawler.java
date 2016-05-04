@@ -10,7 +10,7 @@ public class InthebetterchineseCrawler {
 private static final Logger logger =  LogManager.getLogger(ToutiaoCrawler.class);
 	
 	public static void main(String[] args) {
-		String workspace = "D:\\peter\\dataace\\dataace-crawler-platform";
+		String workspace = "D:\\dataace\\dataace-crawler-platform";
 		CommonCrawler.addPipeline(new MongoPipeline());
 		try {	
 			TemplateConfig templateConfig = CommonCrawler.registTemplateConfig(workspace+"\\dataace-crawler\\src\\main\\resources\\template\\inthebetterchinese.xml");
