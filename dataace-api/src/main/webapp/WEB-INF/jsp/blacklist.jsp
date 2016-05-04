@@ -32,25 +32,7 @@
 
 
    <div class="main"> 
-<<<<<<< HEAD
-<div class="search_result">
 
-        <div class="weui_panel_hd" ng-model="resultHeader" ng-bind-html="resultHeader| trustHtml"></div>
-        <div class="weui_panel_bd" >
-        <div class="weui_media_box weui_media_text" ng-repeat="blackname in searchResult">
-        <h4 class="weui_media_title">{{blackname.overdues[0].remarks}}</h4>
-          
- <p class="weui_media_desc"><span class="field">姓名 :{{blackname.name}}</span><span class="field"> 身份证号 :{{blackname.idCard}}</span></p>
-            <p class="weui_media_desc"><span class="field">手机号 :{{blackname.mobile}}</span><span class="field">邮箱 :{{blackname.email}}</span></p>
-            <p class="weui_media_desc"><span class="field">借款时间 :{{blackname.overdues[0].loanDate}}</span><span class="field">逾期天数 :{{blackname.overdues[0].overdueDays}}天</span></p>
-            <p class="weui_media_desc"><span class="field">借入本金 :{{blackname.overdues[0].loanAmount}}</span><span class="field">逾期本息 :{{blackname.overdues[0].overdueMoney}}元</span></p>
-            <p class="weui_media_desc"><span class="field">数据来源 :{{blackname.overdues[0].loanPlatform}}</span><span class="field">更新时间 :{{blackname.updateTime}}</span></p>
-        </div>
-        </div>
-        
-        </div>
-        
-=======
    
    <div class="find_dis_list current">
                <span ng-model="resultHeader" ng-bind-html="resultHeader| trustHtml"></span>
@@ -82,7 +64,7 @@
     
     </div>
     
->>>>>>> 035c8fee9792525a4253f5e149f0cb69f1df75ae
+
         
         
 

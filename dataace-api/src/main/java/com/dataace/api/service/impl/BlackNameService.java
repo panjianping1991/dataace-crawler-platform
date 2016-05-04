@@ -109,10 +109,10 @@ private final Logger logger = LoggerFactory.getLogger(BlackNameService.class);
 	
 	public void buildBlackName(DBObject dbObject,BlackName blackName){
 		String id = dbObject.get("_id").toString();
-		String dataSource = dbObject.get("dataSource").toString();
-		String idCard = dbObject.get("idCard").toString();
-		String mobile = dbObject.get("mobile").toString();
-		String name = dbObject.get("name").toString();
+		String dataSource = dbObject.get("dataSource")==null?null:dbObject.get("dataSource").toString();
+		String idCard = dbObject.get("idCard")==null?null:dbObject.get("idCard").toString();
+		String mobile = dbObject.get("mobile")==null?null:dbObject.get("mobile").toString();
+		String name = dbObject.get("name")==null?null:dbObject.get("name").toString();
 		String gender = dbObject.get("gendar")==null?null:dbObject.get("gendar").toString();
 		String email = dbObject.get("email")==null?null:dbObject.get("email").toString();
 		
