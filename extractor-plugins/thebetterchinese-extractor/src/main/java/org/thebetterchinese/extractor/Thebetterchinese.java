@@ -51,19 +51,19 @@ public class Thebetterchinese implements Extractor<BlackName> {
 			String href = eles.get(i).attr("href");
 			//String urlRegex = ".*(/blacklistdetail/\\w+)[^\\w].*";
 			// /Blacklist/Laidetails.mvc?laiId=181
-			String urlRegex = "/Blacklist/Laidetails.mvc?laiId=\\d+";
+			String urlRegex = "/Blacklist/Laidetails.mvc\\?laiId=\\d+";
 			
 			Pattern pattern = Pattern.compile(urlRegex);
 			Matcher matcher = pattern.matcher(href);
 			//logger.info("onclick:"+onclick);
 			if(matcher.find()){
-				String url = matcher.group(1);
+				String url = matcher.group(0);
 				try {
 					
 					url = URLUtil.getAbsoluteUrl(url, originalUrl);
 					Request request = new Request(url);
 					Map<String,String> headers = new HashMap<String,String>();
-					headers.put("Host", "http://www.thebetterchinese.com/");
+					headers.put("Host", "www.thebetterchinese.com/");
 					headers.put("User-Agent", "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.71 Safari/537.36");
 					request.setHeaders(headers);
 					requests.add(request);
@@ -86,7 +86,7 @@ public class Thebetterchinese implements Extractor<BlackName> {
 					String listUrl = "http://www.thebetterchinese.com/Blacklist/Lai.mvc?pageNo="+i+"&pageSize=10";
 					Request request = new Request(listUrl);
 					Map<String,String> headers = new HashMap<String,String>();
-					headers.put("Host", "http://www.thebetterchinese.com/");
+					headers.put("Host", "www.thebetterchinese.com/");
 					headers.put("User-Agent", "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.71 Safari/537.36");
 					request.setHeaders(headers);
 					requests.add(request);
