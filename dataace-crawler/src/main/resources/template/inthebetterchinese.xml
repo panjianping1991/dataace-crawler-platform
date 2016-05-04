@@ -74,7 +74,7 @@
 			<regexs>
 				<urlRegs>
 					<urlReg>http://www.thebetterchinese.com/Blacklist/Lai.mvc</urlReg>
-					
+					<urlReg>http://www.thebetterchinese.com/Blacklist/Lai.mvc\?pageNo=\d+&pageSize=\d+</urlReg>
 				</urlRegs>
 			</regexs>
 			<page>
@@ -103,7 +103,7 @@
 				</props>
 			</page>
 			<target>
-				<class>org.thebetterchinese.extractor.Thebetterchinese</class>
+				<class>org.thebetterchinese.extractor.ThebetterchineseDetail</class>
 				<props>
 				</props>
 			</target>
