@@ -26,7 +26,7 @@ public class WeixinService implements IWeixinService{
 	@Override
 	public void createMenu() throws Exception {
 		IWeixinButton ctrdButton = new ViewButton("征信查询","http://www.dataace.cn/dataace-api/blacklist/weixin");
-		IWeixinButton gstsButton = new ViewButton("征信录入","http://www.dataace.cn/dataace-api/company/weixin");
+		IWeixinButton gstsButton = new ViewButton("征信录入","http://www.dataace.cn/dataace-api/blacklist/weixin/submit");
 		IWeixinButton hyfxButton = new ViewButton("行业分析","http://www.dataace.cn/dataace-api/industry/weixin");
 		
 		WeixinMenu weixinMenu = new WeixinMenu();
