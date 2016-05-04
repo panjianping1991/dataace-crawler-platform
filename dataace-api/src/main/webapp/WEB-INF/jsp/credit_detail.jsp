@@ -7,9 +7,9 @@
         <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
         <title>DATAACE-征信记录</title>
         <!-- 引入 WeUI -->
-        <link rel="stylesheet" href="/dataace-api/css/weui.css"/>
+         <link rel="stylesheet" href="/dataace-api/css/weui.css"/>
          <link rel="stylesheet" href="/dataace-api/css/blackdetail.css"/>
-        <script src="http://apps.bdimg.com/libs/angular.js/1.4.6/angular.min.js"></script>
+         <script src="http://apps.bdimg.com/libs/angular.js/1.4.6/angular.min.js"></script>
 <title>失信人信息</title>
 
 

@@ -7,9 +7,9 @@
         <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
         <title>DATAACE-上传失信人名单</title>
         <!-- 引入 WeUI -->
-        <link rel="stylesheet" href="/dataace-api/css/weui.css"/>
+         <link rel="stylesheet" href="/dataace-api/css/weui.css"/>
          <link rel="stylesheet" href="/dataace-api/css/blackdetail.css"/>
-           <link rel="stylesheet" href="/dataace-api/css/submit_black.css"/>
+         <link rel="stylesheet" href="/dataace-api/css/submit_black.css"/>
         <script src="http://apps.bdimg.com/libs/angular.js/1.4.6/angular.min.js"></script>
 <title>失信人信息</title>
 
@@ -44,7 +44,7 @@
  <fieldset class="pure-group">
         <input type="text" class="pure-input-1-2" ng-model="user.loanDate"  placeholder="借款时间">
          <input type="text" class="pure-input-1-2" ng-model="user.overdueDays"  placeholder="逾期天数">
-            <input type="text" class="pure-input-1-2" ng-model="user.overdueMoney"  placeholder="逾期本息">
+         <input type="text" class="pure-input-1-2" ng-model="user.overdueMoney"  placeholder="逾期本息">
          <input type="text" class="pure-input-1-2" ng-model="user.loanPlatform"  placeholder="放贷平台">
         <textarea class="pure-input-1-2" ng-model="user.remarks"  placeholder="备注"></textarea>
     </fieldset>

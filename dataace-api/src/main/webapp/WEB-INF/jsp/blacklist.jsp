@@ -31,8 +31,8 @@
 
 
 
-   <div class="main"> 
-<<<<<<< HEAD
+ <div class="main"> 
+
 <div class="search_result">
 
         <div class="weui_panel_hd" ng-model="resultHeader" ng-bind-html="resultHeader| trustHtml"></div>
@@ -50,7 +50,7 @@
         
         </div>
         
-=======
+
    
    <div class="find_dis_list current">
                <span ng-model="resultHeader" ng-bind-html="resultHeader| trustHtml"></span>
@@ -82,7 +82,7 @@
     
     </div>
     
->>>>>>> 035c8fee9792525a4253f5e149f0cb69f1df75ae
+
         
         
 
