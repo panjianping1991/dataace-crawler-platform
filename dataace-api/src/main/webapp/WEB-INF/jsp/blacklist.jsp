@@ -31,6 +31,7 @@
 
 
 
+<<<<<<< HEAD
  <div class="main"> 
 
 <div class="search_result">
@@ -50,6 +51,9 @@
         
         </div>
         
+=======
+   <div class="main"> 
+>>>>>>> 336743c5928d6bf1d7ad1a4ef07fe6f6dcf49fdc
 
    
    <div class="find_dis_list current">
